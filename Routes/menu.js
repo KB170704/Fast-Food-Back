@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Menu = require("../models/menu");
+const Menu = require("../Models/menu");
 
 // 📌 Show all items (Admin)
 router.get("/", async (req, res) => {
