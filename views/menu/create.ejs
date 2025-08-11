@@ -111,32 +111,28 @@
 
     <div class="form-container">
       <h1>Add Menu Item</h1>
-      <form action="/menu/create" method="POST" enctype="multipart/form-data">
-        <label for="Name">Name:</label>
-        <input type="text" name="Name" required />
+        <form action="/menu/create" method="POST" enctype="multipart/form-data">
+            <label>Name</label>
+            <input type="text" name="Name" required>
 
-        <label for="Description">Description:</label>
-        <textarea name="Description" rows="3" required></textarea>
+            <label>Description</label>
+            <textarea name="Description"></textarea>
 
-        <label for="price">Price:</label>
-        <input type="number" name="price" step="0.01" required />
+            <label>Price</label>
+            <input type="number" name="price" step="0.01" required>
 
-        <label for="category">Category:</label>
-        <input type="text" name="category" required />
+            <label>Category</label>
+            <input type="text" name="category" required>
 
-        <label for="photo">Photo:</label>
-        <input
-          type="file"
-          name="photo"
-          id="photoInput"
-          accept="image/*"
-          required
-        />
+            <label>Discount (%)</label>
+            <input type="number" name="discount" min="0" max="100" value="0">
 
-        <div class="preview" id="imagePreview"></div>
+            <label>Photo</label>
+            <input type="file" name="photo">
 
-        <button type="submit">Add Menu Item</button>
-      </form>
+            <button type="submit">Add Item</button>
+        </form>
+
     </div>
 
     <script>
