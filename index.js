@@ -30,8 +30,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Middleware
 app.use(cors({
-  origin: 'http://localhost:3000', // your React app
-  credentials: true  // ✅ allow cookies
+  origin: ['https://kaushik-six.vercel.app'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
 }));
 
 app.use(express.urlencoded({ extended: true }));
