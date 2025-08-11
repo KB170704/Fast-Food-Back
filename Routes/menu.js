@@ -10,10 +10,16 @@ router.get('/', authenticateJWT, authorizeRoles('admin'), async (req, res) => {
     res.render('menuList', { items });
 });
 
-// 📌 Show create form
-router.get('/create', authenticateJWT, authorizeRoles('admin'), (req, res) => {
-    res.render('create');
-});
+// 📌 Show Create Form (GET)
+router.get(
+    '/create',
+    authenticateJWT,
+    authorizeRoles('admin'),
+    (req, res) => {
+        res.render('create'); // renders views/create.ejs
+    }
+);
+
 
 // 📌 Add new menu item
 router.post('/create', authenticateJWT, authorizeRoles('admin'), upload.single('photo'), async (req, res) => {
