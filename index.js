@@ -14,7 +14,7 @@ const Gallery = require('./Models/gallery');
 const Contact = require('./Models/contact');
 const Menu = require('./Models/menu');
 const User = require('./Models/user');
-// const Payment = require('./Models/order');
+const Payment = require('./Models/order');
 const bcrypt = require('bcryptjs'); // Required for login
 const jwt = require('jsonwebtoken'); // Required for JWT login
 
