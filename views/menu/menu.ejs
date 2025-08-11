@@ -6,7 +6,7 @@
 <body>
 <h1>Menu Items</h1>
 <a href="/menu/create">Add New Item</a>
-<table border="1">
+<table border="1" cellpadding="10">
     <tr>
         <th>Name</th>
         <th>Price</th>
@@ -20,11 +20,11 @@
             <td><%= item.name %></td>
             <td><%= item.price %></td>
             <td><%= item.category %></td>
-            <td><%= item.discount %>%</td>
+            <td><%= item.discount %></td>
             <td><%= item.description %></td>
             <td>
-                <a href="/menu/edit/<%= item._id %>">Edit</a>
-                <a href="/menu/delete/<%= item._id %>">Delete</a>
+                <a href="/menu/edit/<%= item._id %>">Edit</a> |
+                <a href="/menu/delete/<%= item._id %>" onclick="return confirm('Delete this item?')">Delete</a>
             </td>
         </tr>
     <% }) %>

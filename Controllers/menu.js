@@ -1,45 +1,62 @@
-const Menu = require('../Models/menu');
+const Menu = require('../Models/Menu');
 
-exports.getAllMenuItems = async (req, res) => {
+// Show all items (Admin + API)
+exports.getAllMenu = async (req, res) => {
     try {
-        const menuItems = await Menu.find();
-        res.json(menuItems);
+        const menu = await Menu.find();
+        if (req.headers.accept && req.headers.accept.includes('application/json')) {
+            return res.json(menu); // For API
+        }
+        res.render("menuList", { menu }); // For EJS
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        res.status(500).send(err.message);
     }
 };
 
-exports.getAllCategories = async (req, res) => {
+// Show create form (EJS)
+exports.showCreateForm = (req, res) => {
+    res.render("menuCreate");
+};
+
+// Create item
+exports.createMenu = async (req, res) => {
     try {
-        const categories = await Menu.distinct('category');
-        res.json(categories);
+        const { name, price, category, discount, description } = req.body;
+        const newMenu = new Menu({ name, price, category, discount, description });
+        await newMenu.save();
+        res.redirect("/menu");
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        res.status(500).send(err.message);
     }
 };
 
-exports.addMenuItem = async (req, res) => {
+// Show edit form
+exports.showEditForm = async (req, res) => {
     try {
-        const { Name, Description, price, category } = req.body;
-        const discount = req.body.discount ? Number(req.body.discount) : 0;
-
-        const photo = req.file
-            ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`
-            : null;
-
-        const newItem = new Menu({
-            Name,
-            Description,
-            price: Number(price),
-            category,
-            photo,
-            discount
-        });
-
-        await newItem.save();
-        res.status(201).json(newItem);
+        const menu = await Menu.findById(req.params.id);
+        res.render("menuEdit", { menu });
     } catch (err) {
-        console.error('Error adding item:', err);
-        res.status(500).json({ message: 'Error adding menu item', error: err.message });
+        res.status(500).send(err.message);
+    }
+};
+
+// Update item
+exports.updateMenu = async (req, res) => {
+    try {
+        const { name, price, category, discount, description } = req.body;
+        await Menu.findByIdAndUpdate(req.params.id, { name, price, category, discount, description });
+        res.redirect("/menu");
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+};
+
+// Delete item
+exports.deleteMenu = async (req, res) => {
+    try {
+        await Menu.findByIdAndDelete(req.params.id);
+        res.redirect("/menu");
+    } catch (err) {
+        res.status(500).send(err.message);
     }
 };
