@@ -114,77 +114,21 @@
     <div class="top-bar">
       <a href="/home">🏠 Home</a>
     </div>
-    
-    <h2>Edit Menu Item</h2>
 
-    <form
-      action="/menu/<%= menuItem._id %>"
-      method="POST"
-      enctype="multipart/form-data"
-    >
-      <label for="Name">Name:</label>
-      <input
-        type="text"
-        name="Name"
-        id="Name"
-        value="<%= menuItem.Name %>"
-        required
-      />
-
-      <label for="Description">Description:</label>
-      <textarea name="Description" id="Description" rows="4" required>
-<%= menuItem.Description %></textarea
-      >
-
-      <label for="price">Price:</label>
-      <input
-        type="number"
-        name="price"
-        id="price"
-        step="0.01"
-        value="<%= menuItem.price %>"
-        required
-      />
-
-      <label for="category">Category:</label>
-      <input
-        type="text"
-        name="category"
-        id="category"
-        value="<%= menuItem.category %>"
-        required
-      />
-
-      <label>Current Photo:</label>
-      <div id="currentPhotoContainer">
-        <% if (menuItem.photo) { %>
-        <img
-          src="<%= menuItem.photo %>"
-          alt="Current Photo"
-          class="preview"
-          id="currentPhoto"
-        />
-        <% } else { %>
-        <p id="noPhotoText">No photo uploaded.</p>
+    <h1>Edit Menu Item</h1>
+    <form action="/menu/edit/<%= item._id %>" method="POST" enctype="multipart/form-data">
+        <input type="text" name="Name" value="<%= item.Name %>" required>
+        <textarea name="Description"><%= item.Description %></textarea>
+        <input type="number" name="price" value="<%= item.price %>" required>
+        <input type="text" name="category" value="<%= item.category %>" required>
+        <input type="number" name="discount" value="<%= item.discount %>" min="0" max="100">
+        <input type="file" name="photo">
+        <% if (item.photo) { %>
+            <img src="<%= item.photo %>" width="100">
         <% } %>
-      </div>
-
-      <label for="photo">Change Photo:</label>
-      <input
-        type="file"
-        name="photo"
-        id="photo"
-        accept="image/*"
-        onchange="previewPhoto(event)"
-      />
-
-      <img id="newPreview" class="preview" style="display: none" />
-
-      <div class="form-buttons">
-        <button type="submit" class="btn btn-submit">Update Item</button>
-        <a href="/menu" class="btn btn-back">← Back to Menu</a>
-      </div>
+        <button type="submit">Update Item</button>
     </form>
+
 
     <script>
       function previewPhoto(event) {

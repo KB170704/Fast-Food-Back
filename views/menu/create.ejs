@@ -110,28 +110,17 @@
     </div>
 
     <div class="form-container">
-      <h1>Add Menu Item</h1>
+        <h1>Add Menu Item</h1>
         <form action="/menu/create" method="POST" enctype="multipart/form-data">
-            <label>Name</label>
-            <input type="text" name="Name" required>
-
-            <label>Description</label>
-            <textarea name="Description"></textarea>
-
-            <label>Price</label>
-            <input type="number" name="price" step="0.01" required>
-
-            <label>Category</label>
-            <input type="text" name="category" required>
-
-            <label>Discount (%)</label>
-            <input type="number" name="discount" min="0" max="100" value="0">
-
-            <label>Photo</label>
+            <input type="text" name="Name" placeholder="Name" required>
+            <textarea name="Description" placeholder="Description"></textarea>
+            <input type="number" name="price" placeholder="Price" required>
+            <input type="text" name="category" placeholder="Category" required>
+            <input type="number" name="discount" placeholder="Discount %" min="0" max="100" value="0">
             <input type="file" name="photo">
-
             <button type="submit">Add Item</button>
         </form>
+
 
     </div>
 
