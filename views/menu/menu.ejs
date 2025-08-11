@@ -1,109 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Admin Menu List</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        h1 {
-            margin-bottom: 15px;
-        }
-        a.button {
-            display: inline-block;
-            padding: 8px 14px;
-            background-color: #28a745;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 4px;
-            margin-bottom: 10px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-        table, th, td {
-            border: 1px solid #ccc;
-        }
-        th {
-            background-color: #f4f4f4;
-            text-align: left;
-            padding: 8px;
-        }
-        td {
-            padding: 8px;
-            vertical-align: middle;
-        }
-        img {
-            max-width: 80px;
-            border-radius: 5px;
-        }
-        .actions a {
-            display: inline-block;
-            margin-right: 5px;
-            padding: 6px 10px;
-            border-radius: 4px;
-            text-decoration: none;
-            color: #fff;
-        }
-        .edit-btn {
-            background-color: #007bff;
-        }
-        .delete-btn {
-            background-color: #dc3545;
-        }
-    </style>
+    <title>Menu List</title>
 </head>
 <body>
-
 <h1>Menu Items</h1>
-
-<a href="/menu/create" class="button">➕ Add New Item</a>
-
-<table>
-    <thead>
+<a href="/menu/create">Add New Item</a>
+<table border="1">
     <tr>
-        <th>Image</th>
         <th>Name</th>
-        <th>Description</th>
+        <th>Price</th>
         <th>Category</th>
-        <th>Price (₹)</th>
-        <th>Discount (%)</th>
+        <th>Discount</th>
+        <th>Description</th>
         <th>Actions</th>
     </tr>
-    </thead>
-    <tbody>
-    <% if (items.length === 0) { %>
+    <% menu.forEach(item => { %>
         <tr>
-            <td colspan="7" style="text-align:center;">No menu items found.</td>
+            <td><%= item.name %></td>
+            <td><%= item.price %></td>
+            <td><%= item.category %></td>
+            <td><%= item.discount %>%</td>
+            <td><%= item.description %></td>
+            <td>
+                <a href="/menu/edit/<%= item._id %>">Edit</a>
+                <a href="/menu/delete/<%= item._id %>">Delete</a>
+            </td>
         </tr>
-    <% } else { %>
-        <% items.forEach(item => { %>
-            <tr>
-                <td>
-                    <% if (item.photo) { %>
-                        <img src="<%= item.photo %>" alt="<%= item.Name %>">
-                    <% } else { %>
-                        No Image
-                    <% } %>
-                </td>
-                <td><%= item.Name %></td>
-                <td><%= item.Description %></td>
-                <td><%= item.category %></td>
-                <td><%= item.price %></td>
-                <td><%= item.discount %></td>
-                <td class="actions">
-                    <a href="/menu/edit/<%= item._id %>" class="edit-btn">✏ Edit</a>
-                    <a href="/menu/delete/<%= item._id %>" class="delete-btn" onclick="return confirm('Delete this item?')">🗑 Delete</a>
-                </td>
-            </tr>
-        <% }) %>
-    <% } %>
-    </tbody>
+    <% }) %>
 </table>
-
 </body>
 </html>
