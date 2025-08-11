@@ -1,19 +1,27 @@
 const jwt = require("jsonwebtoken");
 
+// Middleware to authenticate using JWT
 const authenticateJWT = (req, res, next) => {
-  const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+  // Get token from cookie or Authorization header
+  const token =
+      req.cookies?.token || req.headers.authorization?.split(" ")[1];
 
-  if (!token) return res.status(401).json({ message: "Access denied. No token provided." });
+  if (!token) {
+    return res
+        .status(401)
+        .json({ message: "Access denied. No token provided." });
+  }
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (err) {
-    res.status(403).json({ message: "Invalid token." });
+    return res.status(403).json({ message: "Invalid token." });
   }
 };
 
+// Middleware to check user roles
 const authorizeRoles = (...roles) => {
   return (req, res, next) => {
     if (!req.user || !roles.includes(req.user.role)) {
@@ -23,16 +31,20 @@ const authorizeRoles = (...roles) => {
   };
 };
 
+// Simple verifyToken for routes that just require authentication
 const verifyToken = (req, res, next) => {
-  const token = req.cookies.token;
-  if (!token) return res.status(401).send('Access denied');
+  const token = req.cookies?.token;
+
+  if (!token) {
+    return res.status(401).json({ message: "Access denied. No token provided." });
+  }
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // decoded contains user info
+    req.user = decoded;
     next();
   } catch (err) {
-    res.status(400).send('Invalid token');
+    return res.status(400).json({ message: "Invalid token." });
   }
 };
 
