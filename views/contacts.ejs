@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contact Submissions</title>
+  <style>
+    /* Basic reset */
+    body {
+      background-color: #f9fafb;
+      font-family: Arial, sans-serif;
+      margin: 32px;
+      padding: 0;
+      color: #333;
+    }
+    .top-bar {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .top-bar a {
+        text-decoration: none;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border-radius: 8px;
+        margin: 0 10px;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+        display: inline-block;
+      }
+
+      .top-bar a:hover {
+        background-color: #0056b3;
+      }
+    .container {
+      max-width: 768px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .contact-card {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+      padding: 1rem 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .contact-card p {
+      margin: 0.25rem 0;
+    }
+    .contact-card strong {
+      font-weight: 600;
+    }
+    .date {
+      font-size: 0.875rem;
+      color: #666;
+      margin-top: 0.5rem;
+    }
+
+    /* Message truncate and hover expand */
+    .message {
+      max-height: 3.6em; /* about 3 lines */
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      /* -webkit-line-clamp: 3; limit lines */
+      -webkit-box-orient: vertical;
+      cursor: pointer;
+      position: relative;
+      transition: max-height 0.3s ease;
+    }
+    .message:hover {
+      max-height: 100vh; /* expand fully */
+      white-space: normal;
+      background-color: #f0f0f0;
+      padding: 0.5rem;
+      border-radius: 4px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+      <a href="/home">🏠 Home</a>
+    </div>
+  <div class="container">
+    <h1>Submitted Contacts</h1>
+    <% contacts.forEach(contact => { %>
+      <div class="contact-card">
+        <p><strong>Name:</strong> <%= contact.name %></p>
+        <p><strong>Email:</strong> <%= contact.email %></p>
+        <p><strong>Message:</strong> 
+          <span class="message" title="<%= contact.message.replace(/"/g, '&quot;') %>">
+            <%= contact.message %>
+          </span>
+        </p>
+        <p class="date"><%= new Date(contact.createdAt).toLocaleString() %></p>
+      </div>
+    <% }); %>
+  </div>
+</body>
+</html>

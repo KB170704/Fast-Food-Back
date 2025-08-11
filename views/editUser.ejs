@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit User</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 2rem;
+    }
+    .top-bar {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .top-bar a {
+        text-decoration: none;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border-radius: 8px;
+        margin: 0 10px;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+        display: inline-block;
+      }
+
+      .top-bar a:hover {
+        background-color: #0056b3;
+      }
+    form {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    input, select {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    a {
+      display: inline-block;
+      margin-top: 1rem;
+      color: #007bff;
+      text-decoration: none;
+    }
+    h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 1.5rem;
+      }
+  </style>
+</head>
+<body>
+    <div class="top-bar">
+      <a href="/home">🏠 Home</a>
+    </div>
+  <h2>Edit User</h2>
+ <form action="/user/update/<%= user._id %>" method="POST">
+    <label for="firstName">First Name:</label>
+    <input type="text" name="firstName" id="firstName" value="<%= user.firstName %>" required>
+
+    <label for="lastName">Last Name:</label>
+    <input type="text" name="lastName" id="lastName" value="<%= user.lastName %>" required>
+
+    <label for="email">Email:</label>
+    <input type="email" name="email" id="email" value="<%= user.email %>" required>
+
+    <label for="contact">Contact:</label>
+    <input type="text" name="contact" id="contact" value="<%= user.contact %>" required>
+
+    <label for="role">Role:</label>
+    <select name="role" id="role" required>
+      <option value="admin" <%= user.role === 'admin' ? 'selected' : '' %>>Admin</option>
+      <option value="employee" <%= user.role === 'employee' ? 'selected' : '' %>>Employee</option>
+      <option value="user" <%= user.role === 'user' ? 'selected' : '' %>>User</option>
+    </select>
+
+    <button type="submit">Update</button>
+  </form>
+
+</body>
+</html>

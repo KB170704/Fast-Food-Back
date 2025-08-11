@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Orders</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .top-bar {
+        display: flex;
+        justify-content: space-around;
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+      .top-bar a {
+        text-decoration: none;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border-radius: 8px;
+        margin: 0 10px;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+        display: inline-block;
+      }
+      .top-bar a:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 p-10">
+    <div class="top-bar">
+      <h1 class="text-3xl font-bold text-orange-600">Payment Orders</h1>
+      <a href="/home">🏠 Home</a>
+    </div>
+    <table class="min-w-full bg-white shadow rounded">
+      <thead>
+        <tr class="bg-orange-100 text-left text-sm font-semibold">
+          <th class="p-3">Name</th>
+          <th class="p-3">Email</th>
+          <th class="p-3">Address</th>
+          <th class="p-3">Payment</th>
+          <th class="p-3">Amount</th>
+          <th class="p-3">Status</th>
+          <th class="p-3">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% orders.forEach(order => { %>
+        <tr class="border-b hover:bg-gray-50">
+          <td class="p-3"><%= order.firstName %></td>
+          <td class="p-3"><%= order.email %></td>
+          <td class="p-3"><%= order.address %></td>
+          <td class="p-3"><%= order.paymentMethod %></td>
+          <td class="p-3">₹<%= order.totalAmount.toFixed(2) %></td>
+          <td class="p-3">
+            <span
+              class="px-2 py-1 rounded-full text-xs <%= order.status === 'Delivered' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700' %>"
+            >
+              <%= order.status %>
+            </span>
+          </td>
+          <td class="p-3">
+            <form action="/payment/order/<%= order._id %>/status" method="POST">
+              <input
+                type="hidden"
+                name="status"
+                value="<%= order.status === 'Pending' ? 'Delivered' : 'Pending' %>"
+              />
+              <button
+                type="submit"
+                class="bg-orange-500 hover:bg-orange-600 text-black text-sm px-3 py-1 rounded"
+              >
+                Mark as <%= order.status === 'Pending' ? 'Delivered' : 'Pending'
+                %>
+              </button>
+            </form>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </body>
+</html>
