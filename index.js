@@ -111,17 +111,24 @@ app.post('/user/login', async (req, res) => {
     );
 
     // You can send the token in a cookie or JSON response; here we just send JSON:
-    res.json({
-      message: 'Login successful',
-      token,
-      user: {
-        id: user._id,
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        role: user.role
-      }
-    });
+    res
+        .cookie('token', token, {
+          httpOnly: true,
+          secure: true, // only over HTTPS
+          sameSite: 'None', // needed for cross-site cookies with Vercel/Render
+          maxAge: 60 * 60 * 1000 // 1 hour
+        })
+        .json({
+          message: 'Login successful',
+          user: {
+            id: user._id,
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            role: user.role
+          }
+        });
+
 
     // Or redirect somewhere after login, e.g.
     // res.redirect('/dashboard');
