@@ -20,7 +20,6 @@ router.get(
     }
 );
 
-
 // 📌 Add new menu item
 router.post('/create', authenticateJWT, authorizeRoles('admin'), upload.single('photo'), async (req, res) => {
     try {
