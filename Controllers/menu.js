@@ -1,86 +1,74 @@
-// controllers/menu.js
-
 const Menu = require('../Models/menu');
 
-// Get all unique categories
-const getAllCategories = async (req, res) => {
-    try {
-        // Using distinct to get unique categories
-        const categories = await Menu.distinct("category");
-        res.status(200).json(categories); // Return the categories array
-    } catch (err) {
-        console.error('Error fetching categories:', err);
-        res.status(500).json({ error: err.message });
-    }
-};
-
-// Get all menu items
-const getAllMenuItems = async (req, res) => {
+exports.getAllMenuItems = async (req, res) => {
     try {
         const items = await Menu.find();
-        res.status(200).json(items);
+        res.json(items);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        res.status(500).json({ message: 'Error fetching menu items' });
     }
 };
 
-// Add a new menu item
-const addMenuItem = async (req, res) => {
+exports.getAllCategories = async (req, res) => {
     try {
-        const { Name, Description, price, category } = req.body;
-        const photo = req.file ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}` : null;
-
-        const newItem = new Menu({ Name, Description, price, category, photo });
-        const savedItem = await newItem.save();
-
-        res.status(201).json(savedItem);
+        const categories = await Menu.distinct('category');
+        res.json(categories);
     } catch (err) {
-        console.error('Error adding menu item:', err);
-        res.status(500).json({ error: err.message });
+        res.status(500).json({ message: 'Error fetching categories' });
     }
 };
 
-// Update an existing menu item
-const updateMenuItem = async (req, res) => {
+exports.addMenuItem = async (req, res) => {
     try {
-        const { id } = req.params;
-        const updates = req.body;
-        let photoUrl = updates.photo;
+        const { Name, Description, price, category, discount } = req.body;
+        const photo = req.file
+            ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`
+            : null;
+
+        const newItem = new Menu({
+            Name,
+            Description,
+            price,
+            category,
+            photo,
+            discount: discount ? Number(discount) : 0
+        });
+
+        await newItem.save();
+        res.status(201).json(newItem);
+    } catch (err) {
+        res.status(500).json({ message: 'Error adding menu item' });
+    }
+};
+
+exports.updateMenuItem = async (req, res) => {
+    try {
+        const menuItem = await Menu.findById(req.params.id);
+        if (!menuItem) return res.status(404).json({ message: 'Item not found' });
+
+        const { Name, Description, price, category, discount } = req.body;
+        if (Name) menuItem.Name = Name;
+        if (Description) menuItem.Description = Description;
+        if (price) menuItem.price = price;
+        if (category) menuItem.category = category;
+        menuItem.discount = discount ? Number(discount) : 0;
 
         if (req.file) {
-            photoUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+            menuItem.photo = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
         }
 
-        const updatedItem = await Menu.findByIdAndUpdate(
-            id,
-            { ...updates, photo: photoUrl },
-            { new: true }
-        );
-
-        if (!updatedItem) {
-            return res.status(404).json({ message: "Menu item not found" });
-        }
-
-        res.status(200).json(updatedItem);
+        await menuItem.save();
+        res.json(menuItem);
     } catch (err) {
-        res.status(400).json({ error: err.message });
+        res.status(500).json({ message: 'Error updating menu item' });
     }
 };
 
-// Delete a menu item
-const deleteMenuItem = async (req, res) => {
+exports.deleteMenuItem = async (req, res) => {
     try {
-        const { id } = req.params;
-        const deletedItem = await Menu.findByIdAndDelete(id);
-
-        if (!deletedItem) {
-            return res.status(404).json({ message: "Menu item not found" });
-        }
-
-        res.status(200).json({ message: "Menu item deleted", deletedItem });
+        await Menu.findByIdAndDelete(req.params.id);
+        res.json({ message: 'Menu item deleted' });
     } catch (err) {
-        res.status(400).json({ error: err.message });
+        res.status(500).json({ message: 'Error deleting menu item' });
     }
 };
-
-module.exports = { getAllCategories, getAllMenuItems, addMenuItem, updateMenuItem, deleteMenuItem };
