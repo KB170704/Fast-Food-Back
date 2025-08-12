@@ -1,33 +1,200 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
 <head>
-    <title>Menu List</title>
+    <meta charset="UTF-8" />
+    <title>All Menu Items</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            margin: 2rem;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #222;
+            margin-bottom: 2.5rem;
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+        }
+
+        .top-bar {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .top-bar a {
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 8px;
+            margin: 0 10px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+        }
+
+        .top-bar a:hover {
+            background-color: #0056b3;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1300px;
+            margin: auto;
+        }
+
+        .menu-item {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+            position: relative;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-item img {
+            max-width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin: 15px 0;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .menu-item img:hover {
+            transform: scale(1.05);
+        }
+
+        .menu-item h3 {
+            font-size: 1.6rem;
+            margin: 0.5rem 0;
+            color: #007bff;
+        }
+
+        .menu-item p {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .menu-item strong {
+            font-weight: 600;
+        }
+
+        .category-badge {
+            display: inline-block;
+            background-color: #e0f0ff;
+            color: #007bff;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .action-links {
+            margin-top: 1rem;
+        }
+
+        .action-links a {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 1rem;
+            margin: 0 8px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Edit Button */
+        .button-edit {
+            background-color: #ffc107;
+            color: #212529;
+        }
+
+        .button-edit:hover {
+            background-color: #e0a800;
+        }
+
+        /* Delete Button */
+        .button-delete {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .button-delete:hover {
+            background-color: #b02a37;
+        }
+
+        /* Add New Item Button */
+        .button-add {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 20px;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .button-add:hover {
+            background-color: #218838;
+        }
+
+        /* Media query for mobile responsiveness */
+        @media (max-width: 600px) {
+            .top-bar a {
+                display: block;
+                margin: 10px auto;
+            }
+
+            .menu-item {
+                padding: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-<h1>Menu Items</h1>
-<a href="/menu/create">Add New Item</a>
-<table border="1" cellpadding="10">
-    <tr>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Category</th>
-        <th>Discount</th>
-        <th>Description</th>
-        <th>Actions</th>
-    </tr>
-    <% menu.forEach(item => { %>
-        <tr>
-            <td><%= item.name %></td>
-            <td><%= item.price %></td>
-            <td><%= item.category %></td>
-            <td><%= item.discount %></td>
-            <td><%= item.description %></td>
-            <td>
-                <a href="/menu/edit/<%= item._id %>">Edit</a> |
-                <a href="/menu/delete/<%= item._id %>" onclick="return confirm('Delete this item?')">Delete</a>
-            </td>
-        </tr>
-    <% }) %>
-</table>
+<div class="top-bar">
+    <a href="/home">🏠 Home</a>
+    <a href="/menu/create">Add New Item</a>
+</div>
+<h1>All Menu Items</h1>
+
+<% if (menuItems.length === 0) { %>
+    <p style="text-align: center">No menu items available.</p>
+<% } else { %>
+    <div class="menu-grid">
+        <% menuItems.forEach(item => { %>
+            <div class="menu-item">
+                <h3><%= item.Name %></h3>
+                <p><%= item.Description %></p>
+                <p><strong>Price:</strong> ₹<%= item.price %></p>
+                <p><strong>Category:</strong> <%= item.category %></p>
+                <% if (item.photo) { %>
+                    <img src="<%= item.photo %>" alt="<%= item.Name %>" width="100" />
+                <% } %>
+                <div class="action-links">
+                    <a href="/menu/edit/<%= item._id %>" class="button button-edit"
+                    >✏️ Edit</a
+                    >
+                    <a href="/menu/delete/<%= item._id %>" class="button button-delete"
+                    >🗑️ Delete</a
+                    >
+                </div>
+            </div>
+        <% }) %>
+    </div>
+<% } %>
 </body>
 </html>
