@@ -49,14 +49,14 @@ app.use("/user", userRoutes);
 app.use('/payment', paymentRoutes);
 app.use('/gallery', galleryRouter);
 
-// ✅ FIX: GET /menu to avoid Cannot GET /menu after redirect
-app.get("/menu", authenticateJWT, authorizeRoles('admin'), async (req, res) => {
+// If using app.js or main server file
+app.get('/menu', authenticateJWT, authorizeRoles('admin'), async (req, res) => {
     try {
-        const menuItems = await Menu.find();
-        res.render("menu/index", { menuItems });
+        const menuItems = await Menu.find(); // fetch menus from database
+        res.render('menu/index', { menuItems }); // or send JSON or render appropriate EJS page
     } catch (err) {
         console.error(err);
-        res.status(500).send("Server Error");
+        res.status(500).send('Server Error');
     }
 });
 

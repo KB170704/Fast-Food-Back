@@ -22,9 +22,15 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Create Menu Item
-router.get('/create', authenticateJWT, authorizeRoles('admin'), (req, res) => {
-    res.render('menu/create');
+router.get('/', authenticateJWT, authorizeRoles('admin'), async (req, res) => {
+    try {
+        const menuItems = await Menu.find();
+        res.render('menu/index', { menuItems });
+    } catch (err) {
+        res.status(500).send('Server Error');
+    }
 });
+
 
 router.post('/create', authenticateJWT, authorizeRoles('admin'), upload.single('photo'), async (req, res) => {
     try {
