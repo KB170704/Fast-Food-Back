@@ -22,14 +22,19 @@ const upload = multer({ storage });
 // EJS VIEW ROUTES
 
 // List menu (EJS view)
-router.get('/', authenticateJWT, async (req, res) => {
+router.post('/create', authenticateJWT, authorizeRoles('admin'), upload.single('photo'), async (req, res) => {
     try {
-        const menuItems = await Menu.find();
-        res.render('menu/index', { menuItems }); // folder: views/menu/index.ejs
+        const { Name, Description, price, category } = req.body;
+        const photo = req.file ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}` : null;
+        const newMenuItem = new Menu({ Name, Description, price, category, photo });
+        await newMenuItem.save();
+        res.redirect('/menu');
     } catch (err) {
+        console.error('Detailed Error:', err);
         res.status(500).send('Internal Server Error');
     }
 });
+
 
 // Show create form
 router.get('/create', authenticateJWT, authorizeRoles('admin'), (req, res) => {
