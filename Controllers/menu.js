@@ -1,20 +1,47 @@
-// controllers/menu.js
-
+const path = require('path');
 const Menu = require('../Models/menu');
 
-// Get all unique categories
+// ===== EJS Pages ===== //
+
+// Show Menu List
+const renderMenuList = async (req, res) => {
+    try {
+        const menus = await Menu.find();
+        res.render('menu/index', { menus });
+    } catch (err) {
+        console.error('Error rendering menu list:', err);
+        res.status(500).send('Server Error');
+    }
+};
+
+// Show Add Form
+const renderAddForm = (req, res) => {
+    res.render('menu/add');
+};
+
+// Show Edit Form
+const renderEditForm = async (req, res) => {
+    try {
+        const menu = await Menu.findById(req.params.id);
+        if (!menu) return res.status(404).send('Menu item not found');
+        res.render('menu/edit', { menu });
+    } catch (err) {
+        res.status(500).send('Server Error');
+    }
+};
+
+// ===== API Endpoints ===== //
+
 const getAllCategories = async (req, res) => {
     try {
-        // Using distinct to get unique categories
         const categories = await Menu.distinct("category");
-        res.status(200).json(categories); // Return the categories array
+        res.status(200).json(categories);
     } catch (err) {
         console.error('Error fetching categories:', err);
         res.status(500).json({ error: err.message });
     }
 };
 
-// Get all menu items
 const getAllMenuItems = async (req, res) => {
     try {
         const items = await Menu.find();
@@ -24,23 +51,21 @@ const getAllMenuItems = async (req, res) => {
     }
 };
 
-// Add a new menu item
 const addMenuItem = async (req, res) => {
     try {
         const { Name, Description, price, category } = req.body;
-        const photo = req.file ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}` : null;
+        const photo = req.file
+            ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`
+            : null;
 
-        const newItem = new Menu({ Name, Description, price, category, photo });
-        const savedItem = await newItem.save();
-
-        res.status(201).json(savedItem);
+        await Menu.create({ Name, Description, price, category, photo });
+        res.redirect('/'); // instead of res.json() for EJS pages
     } catch (err) {
         console.error('Error adding menu item:', err);
-        res.status(500).json({ error: err.message });
+        res.status(500).send('Server Error');
     }
 };
 
-// Update an existing menu item
 const updateMenuItem = async (req, res) => {
     try {
         const { id } = req.params;
@@ -57,30 +82,37 @@ const updateMenuItem = async (req, res) => {
             { new: true }
         );
 
-        if (!updatedItem) {
-            return res.status(404).json({ message: "Menu item not found" });
-        }
+        if (!updatedItem) return res.status(404).send('Menu item not found');
 
-        res.status(200).json(updatedItem);
+        res.redirect('/');
     } catch (err) {
-        res.status(400).json({ error: err.message });
+        res.status(400).send('Error updating menu item');
     }
 };
 
-// Delete a menu item
 const deleteMenuItem = async (req, res) => {
     try {
         const { id } = req.params;
         const deletedItem = await Menu.findByIdAndDelete(id);
 
-        if (!deletedItem) {
-            return res.status(404).json({ message: "Menu item not found" });
-        }
+        if (!deletedItem) return res.status(404).send('Menu item not found');
 
-        res.status(200).json({ message: "Menu item deleted", deletedItem });
+        res.redirect('/');
     } catch (err) {
-        res.status(400).json({ error: err.message });
+        res.status(400).send('Error deleting menu item');
     }
 };
 
-module.exports = { getAllCategories, getAllMenuItems, addMenuItem, updateMenuItem, deleteMenuItem };
+module.exports = {
+    // EJS render functions
+    renderMenuList,
+    renderAddForm,
+    renderEditForm,
+
+    // API JSON functions
+    getAllCategories,
+    getAllMenuItems,
+    addMenuItem,
+    updateMenuItem,
+    deleteMenuItem
+};
