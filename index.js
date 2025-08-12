@@ -49,10 +49,17 @@ app.use("/user", userRoutes);
 app.use('/payment', paymentRoutes);
 app.use('/gallery', galleryRouter);
 
-// Home route
-// app.get("/home", (req, res) => {
-//     res.render("home");
-// });
+// ✅ FIX: GET /menu to avoid Cannot GET /menu after redirect
+app.get("/menu", authenticateJWT, authorizeRoles('admin'), async (req, res) => {
+    try {
+        const menuItems = await Menu.find();
+        res.render("menu/index", { menuItems });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Server Error");
+    }
+});
+
 app.get("/home", async (req, res) => {
   try {
     const galleryItems = await Gallery.find();
@@ -111,23 +118,22 @@ app.post('/user/login', async (req, res) => {
     );
 
     // You can send the token in a cookie or JSON response; here we just send JSON:
-    res
-        .cookie('token', token, {
+      // ✅ Cookie settings for cross-site requests
+      res.cookie('token', token, {
           httpOnly: true,
-          secure: true, // only over HTTPS
-          sameSite: 'None', // needed for cross-site cookies with Vercel/Render
-          maxAge: 60 * 60 * 1000 // 1 hour
-        })
-        .json({
+          secure: true,
+          sameSite: 'None',
+          maxAge: 60 * 60 * 1000
+      }).json({
           message: 'Login successful',
           user: {
-            id: user._id,
-            email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            role: user.role
+              id: user._id,
+              email: user.email,
+              firstName: user.firstName,
+              lastName: user.lastName,
+              role: user.role
           }
-        });
+      });
 
 
     // Or redirect somewhere after login, e.g.
