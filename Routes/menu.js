@@ -6,9 +6,6 @@ const multer = require('multer');
 const path = require('path');
 const Menu = require('../Models/menu');
 const {
-    addMenuItem,
-    updateMenuItem,
-    deleteMenuItem,
     getAllMenuItems,
     getAllCategories
 } = require('../controllers/menu');
