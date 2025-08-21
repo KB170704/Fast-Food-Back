@@ -9,7 +9,6 @@ const menuRouter = require('./Routes/menu');
 const contactRoutes = require('./Routes/contact');
 const paymentRoutes = require('./Routes/payment');
 
-const Gallery = require('./Models/gallery');
 const Contact = require('./Models/contact');
 const Menu = require('./Models/menu');
 const User = require('./Models/user');
@@ -46,8 +45,6 @@ app.use("/menu", menuRouter);
 app.use("/contact", contactRoutes);
 app.use("/user", userRoutes);
 app.use('/payment', paymentRoutes);
-app.use('/gallery', galleryRouter);
-
 // If using app.js or main server file
 app.get('/menu', authenticateJWT, authorizeRoles('admin'), async (req, res) => {
     try {
@@ -68,7 +65,6 @@ app.get("/home", async (req, res) => {
         const orders = await Payment.find();
 
         res.render("home", {
-            galleryItems,
             contacts,
             menuItems,
             users,
