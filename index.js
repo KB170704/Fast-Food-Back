@@ -28,8 +28,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Middleware
 app.use(cors({
-    origin: "https://kaushik-six.vercel.app",
-    credentials: true
+    origin: 'https://kaushik-six.vercel.app/login',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true  // ✅ allow cookies
 }));
 
 app.use(express.urlencoded({ extended: true }));
@@ -127,8 +128,7 @@ app.post('/user/login', async (req, res) => {
 });
 
 // Start the server
-const PORT = process.env.PORT || back-wksz.onrender.com;
-
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
     console.log(`✅ Server is running on port ${PORT}`);
 });
