@@ -28,7 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Middleware
 app.use(cors({
-    origin: 'https://kaushik-six.vercel.app/login',
+    origin: 'https://kaushik-six.vercel.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true  // ✅ allow cookies
 }));
