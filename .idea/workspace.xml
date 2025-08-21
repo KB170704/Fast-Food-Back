@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4b689a0a-9348-4cae-92ca-bd29dad1ff18" name="Changes" comment="update C">
+    <list default="true" id="4b689a0a-9348-4cae-92ca-bd29dad1ff18" name="Changes" comment="link R">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -69,6 +71,7 @@
       <updated>1755789491027</updated>
       <workItem from="1755789492614" duration="618000" />
       <workItem from="1755794079678" duration="2551000" />
+      <workItem from="1755796950653" duration="445000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <option name="closed" value="true" />
@@ -110,7 +113,31 @@
       <option name="project" value="LOCAL" />
       <updated>1755796516476</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="link">
+      <option name="closed" value="true" />
+      <created>1755797073310</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1755797073310</updated>
+    </task>
+    <task id="LOCAL-00007" summary="link">
+      <option name="closed" value="true" />
+      <created>1755797222288</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1755797222288</updated>
+    </task>
+    <task id="LOCAL-00008" summary="link R">
+      <option name="closed" value="true" />
+      <created>1755797315731</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1755797315731</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -119,6 +146,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="update" />
     <MESSAGE value="update C" />
-    <option name="LAST_COMMIT_MESSAGE" value="update C" />
+    <MESSAGE value="link" />
+    <MESSAGE value="link R" />
+    <option name="LAST_COMMIT_MESSAGE" value="link R" />
   </component>
 </project>
