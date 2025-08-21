@@ -51,8 +51,7 @@
             Dashboard
         </h2>
         <nav>
-            <a href="/home">🏠 Home</a>
-            <a href="#gallery">📷 Gallery</a>
+            <a href="/">🏠 Home</a>
             <a href="#menu">🍽️ Menu</a>
             <a href="#users">👥 Users</a>
             <a href="#contacts">📩 Contacts</a>
@@ -64,59 +63,12 @@
 
     <!-- Main Content -->
     <div class="content w-full">
-        <!-- Gallery Section -->
-        <section id="gallery" class="card mb-10">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-semibold text-blue-800">
-                    📸 Gallery Items
-                </h2>
-                <a
-                        href="/gallery/add"
-                        class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-                >+ Add New</a
-                >
-            </div>
-            <% if (galleryItems.length === 0) { %>
-                <p class="text-gray-600">No gallery items found.</p>
-            <% } else { %>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <% galleryItems.forEach(item => { %>
-                        <div class="bg-white rounded-lg shadow p-4">
-                            <img
-                                    src="/<%= item.image %>"
-                                    alt="<%= item.name %>"
-                                    class="w-full h-40 object-cover rounded mb-2"
-                            />
-                            <h3 class="text-lg font-bold text-blue-700"><%= item.name %></h3>
-                            <p class="text-gray-600 text-sm"><%= item.description %></p>
-                            <div class="flex justify-between mt-2">
-                                <a
-                                        href="/gallery/edit/<%= item._id %>"
-                                        class="bg-yellow-400 text-black px-3 py-1 rounded hover:bg-yellow-500 text-sm"
-                                >✏️ Edit</a
-                                >
-                                <form
-                                        action="/gallery/<%= item._id %>?_method=DELETE"
-                                        method="POST"
-                                >
-                                    <button
-                                            type="submit"
-                                            class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-sm"
-                                    >
-                                        🗑️ Delete
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    <% }) %>
-                </div>
-            <% } %>
-        </section>
 
         <!-- Menu Section -->
         <section id="menu" class="card mb-10">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-semibold text-blue-800">🍽️ Menu Items</h2>
+                <a href="/menu" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Menu</a>
                 <a
                         href="/menu/create"
                         class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
@@ -169,6 +121,7 @@
                 <h2 class="text-xl font-semibold text-blue-800">
                     👥 Registered Users
                 </h2>
+                <a href="/user/all" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">User</a>
                 <a
                         href="/user/add"
                         class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
@@ -228,6 +181,7 @@
             <h2 class="text-xl font-semibold text-blue-800 mb-4">
                 📨 Contact Submissions
             </h2>
+            <a href="/contact" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">contacts</a>
             <% contacts.forEach(contact => { %>
                 <div class="bg-white rounded shadow p-4 mb-4">
                     <p><strong>Name:</strong> <%= contact.name %></p>
@@ -247,9 +201,16 @@
 
         <!-- Orders Section -->
         <section id="orders" class="card mb-10">
-            <h2 class="text-xl font-semibold text-blue-800 mb-4">
-                💰 Payment Orders
-            </h2>
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold text-blue-800 mb-4">
+                    💰 Payment Orders
+                </h2>
+                <a
+                        href="/payment/all"
+                        class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                >Payment</a
+                >
+            </div>
             <% if (orders.length === 0) { %>
                 <p class="text-gray-600">No orders found.</p>
             <% } else { %>
@@ -262,8 +223,6 @@
                             <th class="p-3 text-left">Address</th>
                             <th class="p-3 text-left">Payment</th>
                             <th class="p-3 text-left">Amount</th>
-                            <th class="p-3 text-left">Status</th>
-                            <th class="p-3 text-left">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -274,32 +233,6 @@
                                 <td class="p-3"><%= order.address %></td>
                                 <td class="p-3"><%= order.paymentMethod %></td>
                                 <td class="p-3">₹<%= order.totalAmount.toFixed(2) %></td>
-                                <td class="p-3">
-                    <span
-                            class="px-2 py-1 rounded-full text-xs <%= order.status === 'Delivered' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700' %>"
-                    >
-                      <%= order.status %>
-                    </span>
-                                </td>
-                                <td class="p-3">
-                                    <form
-                                            action="/payment/order/<%= order._id %>/status"
-                                            method="POST"
-                                    >
-                                        <input
-                                                type="hidden"
-                                                name="status"
-                                                value="<%= order.status === 'Pending' ? 'Delivered' : 'Pending' %>"
-                                        />
-                                        <button
-                                                type="submit"
-                                                class="bg-orange-500 hover:bg-orange-600 text-white text-sm px-3 py-1 rounded"
-                                        >
-                                            Mark as <%= order.status === 'Pending' ? 'Delivered' :
-                                                    'Pending' %>
-                                        </button>
-                                    </form>
-                                </td>
                             </tr>
                         <% }) %>
                         </tbody>
@@ -307,6 +240,7 @@
                 </div>
             <% } %>
         </section>
+
     </div>
 </div>
 </body>

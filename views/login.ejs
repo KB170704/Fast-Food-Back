@@ -112,7 +112,7 @@
             // ✅ Store token in cookie (expires in 1 day)
             document.cookie = `token=${data.token}; path=/; max-age=86400;`;
 
-            window.location.href = "/home";
+            window.location.href = "/";
           } else {
             alert(data.message || "Login failed");
           }

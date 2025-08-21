@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu Items</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .home-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            background-color: #10b981;
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .home-btn:hover {
+            background-color: #059669;
+        }
+
+        .menu-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .menu-item {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            width: 300px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .menu-item .details {
+            padding: 10px;
+        }
+
+        .menu-item h2 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .menu-item p {
+            margin: 5px 0;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .menu-item .photo-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 5px;
+        }
+        .menu-item .photo-gallery img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .menu-item .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .menu-item .actions a {
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            color: #fff;
+            transition: 0.3s;
+        }
+        .menu-item .actions .edit {
+            background-color: #3b82f6;
+        }
+        .menu-item .actions .delete {
+            background-color: #ef4444;
+        }
+        .menu-item .actions .edit:hover {
+            background-color: #2563eb;
+        }
+        .menu-item .actions .delete:hover {
+            background-color: #dc2626;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Home Button -->
+<a href="/" class="home-btn">Home</a>
+<a href="/menu/create" class="home-btn">add menu</a>
+<h1>Menu Items</h1>
+
+<div class="menu-list">
+    <% if (menuItems && menuItems.length > 0) { %>
+        <% menuItems.forEach(function(item) { %>
+            <div class="menu-item">
+                <!-- Primary Photo -->
+                <% if (item.primaryPhoto) { %>
+                    <img src="<%= item.primaryPhoto %>" alt="<%= item.Name %>">
+                <% } %>
+
+                <!-- Details -->
+                <div class="details">
+                    <h2><%= item.Name %></h2>
+                    <p><strong>Description:</strong> <%= item.Description %></p>
+                    <p><strong>Price:</strong> ₹<%= item.price %> | <strong>Final Price:</strong> ₹<%= item.finalPrice %></p>
+                    <p><strong>Discount:</strong> <%= item.discount %>%</p>
+                    <p><strong>Category:</strong> <%= item.category %></p>
+                    <p><strong>Type:</strong> <%= item.type %></p>
+                    <p><strong>Unit:</strong> <%= item.unitNumber %> <%= item.unit %></p>
+                    <p><strong>Delivery Time:</strong> <%= item.deliveryTime %> mins</p>
+                    <p><strong>FSSAI License:</strong> <%= item.fssaiLicense %></p>
+                    <p><strong>Shelf Life:</strong> <%= item.shelfLife %></p>
+                    <p><strong>Return Policy:</strong> <%= item.returnPolicy %></p>
+                    <p><strong>Storage Tips:</strong> <%= item.storageTips %></p>
+                    <p><strong>Key Features:</strong> <%= item.keyFeatures %></p>
+                    <p><strong>Manufacturer:</strong> <%= item.manufacturerName %>, <%= item.manufacturerAddress %></p>
+                    <p><strong>Customer Care:</strong> <%= item.customerCareDetails %></p>
+
+                    <!-- Photo Gallery -->
+                    <% if (item.photos && item.photos.length > 0) { %>
+                        <div class="photo-gallery">
+                            <% item.photos.forEach(function(photo) { %>
+                                <img src="<%= photo %>" alt="Photo">
+                            <% }) %>
+                        </div>
+                    <% } %>
+
+                    <!-- Actions -->
+                    <div class="actions">
+                        <a href="/menu/edit/<%= item._id %>" class="edit">Edit</a>
+                        <a href="/menu/delete/<%= item._id %>" class="delete" onclick="return confirm('Are you sure to delete this item?');">Delete</a>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+    <% } else { %>
+        <p>No menu items found.</p>
+    <% } %>
+</div>
+
+</body>
+</html>
