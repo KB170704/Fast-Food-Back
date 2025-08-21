@@ -32,7 +32,7 @@
   <body class="bg-gray-100 p-10">
     <div class="top-bar">
       <h1 class="text-3xl font-bold text-orange-600">Payment Orders</h1>
-      <a href="/">🏠 Home</a>
+      <a href="/home">🏠 Home</a>
     </div>
     <table class="min-w-full bg-white shadow rounded">
       <thead>
@@ -66,13 +66,13 @@
               <input
                 type="hidden"
                 name="status"
-                value="<%= order.status === 'Pending' ? 'Delivered' : 'Pending' %>"
+                value="<%= order.status === 'Delivered' ? 'Delivered' : 'Delivered' %>"
               />
               <button
                 type="submit"
                 class="bg-orange-500 hover:bg-orange-600 text-black text-sm px-3 py-1 rounded"
               >
-                Mark as <%= order.status === 'Pending' ? 'Delivered' : 'Pending'
+                Mark as <%= order.status === 'Delivered' ? 'Delivered' : 'Delivered'
                 %>
               </button>
             </form>

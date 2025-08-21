@@ -1,33 +1,35 @@
+// routes/menu.js
+
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const Menu = require('../Models/menu');
 const {
-  addMenuItem,
-  updateMenuItem,
-  deleteMenuItem,
-  getAllMenuItems,
-  getAllCategories
-} = require('../Controllers/menu');
+    addMenuItem,
+    updateMenuItem,
+    deleteMenuItem,
+    getAllMenuItems,
+    getAllCategories
+} = require('../controllers/menu');
 const { authenticateJWT, authorizeRoles } = require('../middleware/auth');
 
 // Multer setup
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, 'uploads/'),
-  filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
+    destination: (req, file, cb) => cb(null, 'uploads/'),
+    filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
 });
 const upload = multer({ storage });
 
-// Protected: Only admin can access these routes
+// Protected: Only admin can access the creation page
 router.get('/create', authenticateJWT, authorizeRoles('admin'), (req, res) => res.render('create'));
 
+// Create new menu item
 router.post('/create', authenticateJWT, authorizeRoles('admin'), upload.array('photos', 10), async (req, res) => {
     try {
-        const { Name, Description, price, category, type, fssaiLicense, shelfLife, returnPolicy, storageTips, unit, keyFeatures, manufacturerName, manufacturerAddress, customerCareDetails, deliveryTime, discount } = req.body;
+        const { Name, Description, price, category, type, fssaiLicense, shelfLife, returnPolicy, storageTips, unitNumber, unit, keyFeatures, manufacturerName, manufacturerAddress, customerCareDetails, deliveryTime, discount } = req.body;
 
-        // Save all uploaded photos
-        const photos = req.files.map(file => `${req.protocol}://${req.get('host')}/uploads/${file.filename}`);
+        const photos = req.files ? req.files.map(file => `${req.protocol}://${req.get('host')}/uploads/${file.filename}`) : [];
         const primaryPhoto = photos[0] || null;
 
         const newMenuItem = new Menu({
@@ -60,7 +62,7 @@ router.post('/create', authenticateJWT, authorizeRoles('admin'), upload.array('p
     }
 });
 
-
+// Update an existing menu item
 router.post('/:id', authenticateJWT, authorizeRoles('admin'), upload.array('photos', 10), async (req, res) => {
     try {
         const updates = req.body;
@@ -68,7 +70,7 @@ router.post('/:id', authenticateJWT, authorizeRoles('admin'), upload.array('phot
         if (req.files && req.files.length > 0) {
             const photos = req.files.map(file => `${req.protocol}://${req.get('host')}/uploads/${file.filename}`);
             updates.photos = photos;
-            updates.primaryPhoto = photos[0]; // first photo as primary
+            updates.primaryPhoto = photos[0];
         }
 
         const updatedItem = await Menu.findByIdAndUpdate(req.params.id, updates, { new: true });
@@ -81,9 +83,7 @@ router.post('/:id', authenticateJWT, authorizeRoles('admin'), upload.array('phot
     }
 });
 
-
-
-// Anyone logged in can view
+// Anyone logged in can view all menu items
 router.get('/item', authenticateJWT, getAllMenuItems);
 
 // Get single menu item by ID
@@ -98,40 +98,40 @@ router.get('/item/:id', authenticateJWT, async (req, res) => {
     }
 });
 
+// Get all categories
 router.get('/categories', authenticateJWT, getAllCategories);
 
-// EJS views
+// Render menu page with items
 router.get('/', authenticateJWT, async (req, res) => {
-  try {
-    const menuItems = await Menu.find();
-    res.render('menu', { menuItems });
-  } catch (err) {
-    res.status(500).send('Internal Server Error');
-  }
+    try {
+        const menuItems = await Menu.find();
+        res.render('menu', { menuItems });
+    } catch (err) {
+        res.status(500).send('Internal Server Error');
+    }
 });
 
-// GET Edit Menu Item
+// Render edit page for a menu item
 router.get('/edit/:id', async (req, res) => {
     try {
         const menuItem = await Menu.findById(req.params.id);
         if (!menuItem) return res.status(404).send("Menu item not found");
-
-        res.render('edit', { menuItem }); // pass menuItem with all new fields
+        res.render('edit', { menuItem });
     } catch (err) {
         console.error(err);
         res.status(500).send("Server error");
     }
 });
 
-
+// Delete a menu item
 router.get('/delete/:id', authenticateJWT, authorizeRoles('admin'), async (req, res) => {
-  try {
-    const deletedItem = await Menu.findByIdAndDelete(req.params.id);
-    if (!deletedItem) return res.status(404).send('Menu item not found');
-    res.redirect('/menu');
-  } catch (err) {
-    res.status(500).send('Error deleting menu item');
-  }
+    try {
+        const deletedItem = await Menu.findByIdAndDelete(req.params.id);
+        if (!deletedItem) return res.status(404).send('Menu item not found');
+        res.redirect('/menu');
+    } catch (err) {
+        res.status(500).send('Error deleting menu item');
+    }
 });
 
 module.exports = router;

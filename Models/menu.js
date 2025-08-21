@@ -1,3 +1,5 @@
+// Models/menu.js
+
 const mongoose = require('mongoose');
 
 const menuSchema = mongoose.Schema({
@@ -18,6 +20,7 @@ const menuSchema = mongoose.Schema({
     manufacturerAddress: { type: String },
     customerCareDetails: { type: String },
     photos: [{ type: String }], // multiple photos
+    primaryPhoto: { type: String }, // first photo as primary
     deliveryTime: { type: Number }, // in minutes
 }, { timestamps: true });
 

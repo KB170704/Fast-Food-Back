@@ -49,7 +49,7 @@ app.use('/payment', paymentRoutes);
 // app.get("/home", (req, res) => {
 //     res.render("home");
 // });
-app.get("/", async (req, res) => {
+app.get("/home", async (req, res) => {
     try {
         const contacts = await Contact.find();
         const menuItems = await Menu.find();
@@ -78,7 +78,7 @@ app.get("/Backend-says", (req, res) => {
 });
 
 // Show login page
-app.get('/login', (req, res) => {
+app.get('/', (req, res) => {
     res.render('login');
 });
 

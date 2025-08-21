@@ -5,9 +5,8 @@ const Menu = require('../Models/menu');
 // Get all unique categories
 const getAllCategories = async (req, res) => {
     try {
-        // Using distinct to get unique categories
         const categories = await Menu.distinct("category");
-        res.status(200).json(categories); // Return the categories array
+        res.status(200).json(categories);
     } catch (err) {
         console.error('Error fetching categories:', err);
         res.status(500).json({ error: err.message });
@@ -27,12 +26,34 @@ const getAllMenuItems = async (req, res) => {
 // Add a new menu item
 const addMenuItem = async (req, res) => {
     try {
-        const { Name, Description, price, category } = req.body;
-        const photo = req.file ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}` : null;
+        const { Name, Description, price, category, type, fssaiLicense, shelfLife, returnPolicy, storageTips, unitNumber, unit, keyFeatures, manufacturerName, manufacturerAddress, customerCareDetails, deliveryTime, discount } = req.body;
 
-        const newItem = new Menu({ Name, Description, price, category, photo });
+        const photos = req.files ? req.files.map(file => `${req.protocol}://${req.get('host')}/uploads/${file.filename}`) : [];
+        const primaryPhoto = photos[0] || null;
+
+        const newItem = new Menu({
+            Name,
+            Description,
+            price,
+            category,
+            type,
+            fssaiLicense,
+            shelfLife,
+            returnPolicy,
+            storageTips,
+            unitNumber,
+            unit,
+            keyFeatures,
+            manufacturerName,
+            manufacturerAddress,
+            customerCareDetails,
+            deliveryTime,
+            discount,
+            photos,
+            primaryPhoto
+        });
+
         const savedItem = await newItem.save();
-
         res.status(201).json(savedItem);
     } catch (err) {
         console.error('Error adding menu item:', err);

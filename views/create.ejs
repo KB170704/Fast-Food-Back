@@ -106,7 +106,7 @@
   </head>
   <body>
     <div class="top-bar">
-      <a href="/">🏠 Home</a>
+      <a href="/home">🏠 Home</a>
     </div>
 
     <div class="form-container">
@@ -144,11 +144,7 @@
             <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 1rem;">
                 <div style="flex: 1;">
                     <label for="unitNumber">Unit Quantity:</label>
-                    <select name="unitNumber" id="unitNumber" style="width: 100%;">
-                        <% [1,2,5,10,15,20,30,40,50,60].forEach(num => { %>
-                            <option value="<%= num %>" <%= num === 1 ? 'selected' : '' %> ><%= num %></option>
-                        <% }) %>
-                    </select>
+                    <input type="number" name="unitNumber" id="unitNumber" step="1" value="" required style="width: 100%;" />
                 </div>
 
                 <div style="flex: 1;">

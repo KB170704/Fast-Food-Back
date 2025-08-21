@@ -3,197 +3,136 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Admin Dashboard</title>
-    <link
-            href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-            rel="stylesheet"
-    />
-    <script
-            src="https://cdn.jsdelivr.net/npm/alpinejs@3.10.3/dist/cdn.min.js"
-            defer
-    ></script>
-    <style>
-        body {
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        .sidebar {
-            width: 250px;
-            background-color: #1f2937;
-            min-height: 100vh;
-            color: white;
-        }
-
-        .sidebar a {
-            display: block;
-            padding: 12px 20px;
-            color: white;
-            text-decoration: none;
-        }
-
-        .sidebar a:hover {
-            background-color: #374151;
-        }
-
-        .content {
-            margin-left: 250px;
-            padding: 2rem;
-        }
-
-        .card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.10.3/dist/cdn.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 </head>
-<body class="bg-gray-100">
+
+<body class="bg-gray-100 font-sans">
 <div class="flex">
+
     <!-- Sidebar -->
-    <div class="sidebar fixed">
-        <h2 class="text-2xl font-bold p-6 border-b border-gray-700">
-            Dashboard
-        </h2>
-        <nav>
-            <a href="/">🏠 Home</a>
-            <a href="#menu">🍽️ Menu</a>
-            <a href="#users">👥 Users</a>
-            <a href="#contacts">📩 Contacts</a>
-            <a href="#orders">💸 Orders</a>
-            <a href="http://localhost:3000/">🏠 front end</a>
-            <a href="/login">Login</a>
+    <div class="sidebar w-64 fixed bg-gray-900 text-white h-screen shadow-lg flex flex-col">
+        <h2 class="text-2xl font-bold p-6 border-b border-gray-800">📊 Dashboard</h2>
+        <nav class="flex-1">
+            <a href="/" class="block px-6 py-3 hover:bg-gray-700">🏠 Home</a>
+            <a href="#menu" class="block px-6 py-3 hover:bg-gray-700">🍽️ Menu</a>
+            <a href="#users" class="block px-6 py-3 hover:bg-gray-700">👥 Users</a>
+            <a href="#contacts" class="block px-6 py-3 hover:bg-gray-700">📩 Contacts</a>
+            <a href="#orders" class="block px-6 py-3 hover:bg-gray-700">💰 Orders</a>
+            <a href="http://localhost:3000/" class="block px-6 py-3 hover:bg-gray-700">🌐 Frontend</a>
+            <a href="/login" class="block px-6 py-3 hover:bg-green-600">🔑 Login</a>
         </nav>
     </div>
 
     <!-- Main Content -->
-    <div class="content w-full">
+    <div class="ml-64 w-full p-8">
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">Welcome, Admin 👋</h1>
+            <p class="text-gray-500">Monitor your restaurant activity at a glance</p>
+        </div>
+
+        <!-- Stats Overview -->
+        <div class="grid gap-6 md:grid-cols-4 mb-10">
+            <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+                <h2 class="text-sm text-gray-500">Menu Items</h2>
+                <p class="text-2xl font-bold text-blue-700"><%= menuItems.length %></p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+                <h2 class="text-sm text-gray-500">Users</h2>
+                <p class="text-2xl font-bold text-green-700"><%= users.length %></p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+                <h2 class="text-sm text-gray-500">Contacts</h2>
+                <p class="text-2xl font-bold text-yellow-600"><%= contacts.length %></p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+                <h2 class="text-sm text-gray-500">Orders</h2>
+                <p class="text-2xl font-bold text-orange-600"><%= orders.length %></p>
+            </div>
+        </div>
 
         <!-- Menu Section -->
-        <!-- Include Swiper CSS & JS -->
-        <link
-                rel="stylesheet"
-                href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
-        />
-        <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-        <section id="menu" class="card mb-10">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-semibold text-blue-800">🍽️ Menu Items</h2>
-                <a href="/menu" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Menu</a>
+        <section id="menu" class="card mb-12">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-semibold text-blue-800">🍽️ Menu Items</h2>
                 <div class="space-x-2">
-                    <a href="/menu/create" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">+ Add
-                        New</a>
+                    <a href="/menu" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">📃 View All</a>
+                    <a href="/menu/create" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">➕ Add New</a>
                 </div>
             </div>
-
             <% if (menuItems.length === 0) { %>
-                <p class="text-gray-600">No menu items found.</p>
+                <p class="text-gray-600">No menu items available.</p>
             <% } else { %>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <% menuItems.forEach(item => { %>
-                        <div class="bg-white rounded-lg shadow p-4">
-
-                            <!-- Swiper Slider for multiple photos -->
+                        <div class="bg-white rounded-xl shadow hover:shadow-lg transition p-4">
                             <% if (item.photos && item.photos.length > 0) { %>
-                                <div class="swiper mySwiper mb-3">
+                                <div class="swiper mySwiper mb-3 rounded-lg overflow-hidden">
                                     <div class="swiper-wrapper">
                                         <% item.photos.forEach(photo => { %>
                                             <div class="swiper-slide">
-                                                <img src="<%= photo %>" alt="<%= item.Name %>"
-                                                     class="w-full h-40 object-cover rounded"/>
+                                                <img src="<%= photo %>" alt="<%= item.Name %>" class="w-full h-40 object-cover">
                                             </div>
                                         <% }) %>
                                     </div>
-                                    <!-- Add navigation -->
-                                    <div class="swiper-button-next"></div>
-                                    <div class="swiper-button-prev"></div>
-                                    <!-- Add pagination -->
                                     <div class="swiper-pagination"></div>
                                 </div>
                             <% } %>
 
-                            <!-- Item Details -->
                             <h3 class="text-lg font-bold text-blue-700"><%= item.Name %></h3>
-                            <p class="text-sm font-semibold mt-1">Price: ₹<%= item.price %> | Final Price:
-                                ₹<%= item.finalPrice %></p>
-                            <p class="text-xs mt-1">Discount: <%= item.discount %>%</p>
-                            <p class="text-xs mt-1 bg-blue-100 text-blue-800 inline-block px-2 py-1 rounded-full">
-                                Category: <%= item.category %></p>
-                            <p class="text-xs mt-1">Type: <%= item.type %></p>
-                            <p class="text-xs mt-1">Unit: <%= item.unitNumber %> <%= item.unit %></p>
-                            <p class="text-xs mt-1">Delivery Time: <%= item.deliveryTime %> mins</p>
-                            <p class="text-xs mt-1">Shelf Life: <%= item.shelfLife %></p>
-
+                            <p class="text-sm mt-1">💵 Price: ₹<%= item.price %> | Final: ₹<%= item.finalPrice %></p>
+                            <p class="text-xs mt-1 text-gray-600">Discount: <%= item.discount %>%</p>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full mt-2 inline-block">
+                            <%= item.category %>
+                        </span>
+                            <p class="text-xs mt-1">Type: <%= item.type %>, Unit: <%= item.unitNumber %> <%= item.unit %></p>
+                            <p class="text-xs mt-1">⏱ Delivery: <%= item.deliveryTime %> mins</p>
+                            <p class="text-xs mt-1">🛒 Shelf Life: <%= item.shelfLife %></p>
                         </div>
                     <% }) %>
                 </div>
             <% } %>
         </section>
-        <!-- Swiper Initialization -->
-        <script>
-            const swipers = document.querySelectorAll('.mySwiper');
-            swipers.forEach(swiperEl => {
-                new Swiper(swiperEl, {
-                    loop: true,
-                    slidesPerView: 1,
-                    navigation: false,
-                    pagination: false,
-                });
-            });
-        </script>
 
-        <!-- User Section -->
-        <section id="users" class="card mb-10">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-semibold text-blue-800">
-                    👥 Registered Users
-                </h2>
-                <a href="/user/all" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">User</a>
-                <a
-                        href="/user/add"
-                        class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-                >+ Add New User</a
-                >
+        <!-- Users Section -->
+        <section id="users" class="card mb-12">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-semibold text-blue-800">👥 Registered Users</h2>
+                <div>
+                    <a href="/user/all" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">📋 View</a>
+                    <a href="/user/add" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">➕ Add User</a>
+                </div>
             </div>
             <% if (users.length === 0) { %>
                 <p class="text-gray-600">No users registered yet.</p>
             <% } else { %>
-                <div class="overflow-auto">
-                    <table class="min-w-full bg-white rounded shadow">
+                <div class="overflow-auto rounded-xl shadow">
+                    <table class="w-full text-sm text-left">
                         <thead class="bg-blue-100 text-blue-800">
                         <tr>
-                            <th class="px-4 py-2 text-left">Name</th>
-                            <th class="px-4 py-2 text-left">Email</th>
-                            <th class="px-4 py-2 text-left">Contact</th>
-                            <th class="px-4 py-2 text-left">Role</th>
-                            <th class="px-4 py-2 text-left">Registered At</th>
-                            <th class="px-4 py-2 text-left">Actions</th>
+                            <th class="px-4 py-2">Name</th>
+                            <th class="px-4 py-2">Email</th>
+                            <th class="px-4 py-2">Contact</th>
+                            <th class="px-4 py-2">Role</th>
+                            <th class="px-4 py-2">Registered</th>
+                            <th class="px-4 py-2">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
                         <% users.forEach(user => { %>
                             <tr class="border-b hover:bg-gray-50">
-                                <td class="px-4 py-2">
-                                    <%= user.firstName %> <%= user.lastName %>
-                                </td>
+                                <td class="px-4 py-2 font-semibold"><%= user.firstName %> <%= user.lastName %></td>
                                 <td class="px-4 py-2"><%= user.email %></td>
                                 <td class="px-4 py-2"><%= user.contact %></td>
                                 <td class="px-4 py-2 capitalize"><%= user.role %></td>
-                                <td class="px-4 py-2">
-                                    <%= new Date(user.createdAt).toLocaleDateString() %>
-                                </td>
+                                <td class="px-4 py-2"><%= new Date(user.createdAt).toLocaleDateString() %></td>
                                 <td class="px-4 py-2 flex gap-2">
-                                    <a
-                                            href="/user/edit/<%= user._id %>"
-                                            class="bg-yellow-400 text-black px-3 py-1 rounded hover:bg-yellow-500 text-sm"
-                                    >✏️ Edit</a
-                                    >
-                                    <a
-                                            href="/user/delete/<%= user._id %>"
-                                            class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-sm"
-                                            onclick="return confirm('Are you sure you want to delete this user?');"
-                                    >🗑️ Delete</a
-                                    >
+                                    <a href="/user/edit/<%= user._id %>" class="bg-yellow-400 px-3 py-1 rounded text-sm">✏️</a>
+                                    <a href="/user/delete/<%= user._id %>" onclick="return confirm('Delete this user?');"
+                                       class="bg-red-500 px-3 py-1 text-white rounded text-sm">🗑️</a>
                                 </td>
                             </tr>
                         <% }) %>
@@ -203,48 +142,31 @@
             <% } %>
         </section>
 
-        <!-- Contact Section -->
-        <section id="contacts" class="card mb-10">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-semibold text-blue-800 mb-4">
-                    📨 Contact Submissions
-                </h2>
-                <a href="/contact" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">contacts</a>
-            </div>
-            <% contacts.forEach(contact => { %>
-                <div class="bg-white rounded shadow p-4 mb-4">
-                    <p><strong>Name:</strong> <%= contact.name %></p>
-                    <p><strong>Email:</strong> <%= contact.email %></p>
-                    <p>
-                        <strong>Message:</strong>
-                        <span class="block text-sm text-gray-700 mt-1"
-                        ><%= contact.message %></span
-                        >
-                    </p>
-                    <p class="text-xs text-gray-500 mt-2">
-                        Submitted at: <%= new Date(contact.createdAt).toLocaleString() %>
-                    </p>
-                </div>
-            <% }); %>
+        <!-- Contacts Section -->
+        <section id="contacts" class="card mb-12">
+            <h2 class="text-2xl font-semibold text-blue-800 mb-6">📨 Contact Submissions</h2>
+            <% if (contacts.length === 0) { %>
+                <p class="text-gray-600">No contact submissions yet.</p>
+            <% } else { %>
+                <% contacts.forEach(contact => { %>
+                    <div class="bg-white p-4 rounded-lg shadow mb-4">
+                        <p><strong>Name:</strong> <%= contact.name %></p>
+                        <p><strong>Email:</strong> <%= contact.email %></p>
+                        <p><strong>Message:</strong> <span class="text-sm text-gray-700"><%= contact.message %></span></p>
+                        <p class="text-xs text-gray-500 mt-2">📅 Submitted at: <%= new Date(contact.createdAt).toLocaleString() %></p>
+                    </div>
+                <% }) %>
+            <% } %>
         </section>
 
         <!-- Orders Section -->
-        <section id="orders" class="card mb-10">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-semibold text-blue-800 mb-4">
-                    💰 Payment Orders
-                </h2>
-                <a
-                        href="/payment/all"
-                        class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-                >Payment</a
-                >
-            </div>
+        <section id="orders" class="card mb-12">
+            <h2 class="text-2xl font-semibold text-orange-700 mb-6">💰 Payment Orders</h2>
             <% if (orders.length === 0) { %>
-                <p class="text-gray-600">No orders found.</p>
+                <p class="text-gray-600">No orders yet.</p>
             <% } else { %>
-                <div class="overflow-auto">
-                    <table class="min-w-full bg-white rounded shadow">
+                <div class="overflow-auto rounded-xl shadow">
+                    <table class="w-full text-sm">
                         <thead class="bg-orange-100 text-orange-800">
                         <tr>
                             <th class="p-3 text-left">Name</th>
@@ -261,7 +183,7 @@
                                 <td class="p-3"><%= order.email %></td>
                                 <td class="p-3"><%= order.address %></td>
                                 <td class="p-3"><%= order.paymentMethod %></td>
-                                <td class="p-3">₹<%= order.totalAmount.toFixed(2) %></td>
+                                <td class="p-3 font-bold text-green-600">₹<%= order.totalAmount.toFixed(2) %></td>
                             </tr>
                         <% }) %>
                         </tbody>
@@ -269,8 +191,19 @@
                 </div>
             <% } %>
         </section>
-
     </div>
 </div>
+
+<!-- Swiper Init -->
+<script>
+    document.querySelectorAll('.mySwiper').forEach(swiper => {
+        new Swiper(swiper, {
+            loop: true,
+            slidesPerView: 1,
+            pagination: { el: swiper.querySelector('.swiper-pagination'), clickable: true },
+        });
+    });
+</script>
+
 </body>
 </html>
