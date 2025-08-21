@@ -13,8 +13,8 @@ const Contact = require('./Models/contact');
 const Menu = require('./Models/menu');
 const User = require('./Models/user');
 const Payment = require('./Models/order');
-const bcrypt = require('bcryptjs'); // Required for login
-const jwt = require('jsonwebtoken'); // Required for JWT login
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 
@@ -26,13 +26,12 @@ app.set('view engine', 'ejs');
 app.set('views', './views');
 app.use(express.urlencoded({ extended: true }));
 
-// Middleware
+// ✅ CORS only allow your frontend (React deployed domain)
 app.use(cors({
-    origin: 'https://kaushik-six.vercel.app', // your React app
-    credentials: true  // ✅ allow cookies
+    origin: 'https://kaushik-six.vercel.app',
+    credentials: true
 }));
 
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -46,9 +45,6 @@ app.use("/user", userRoutes);
 app.use('/payment', paymentRoutes);
 
 // Home route
-// app.get("/home", (req, res) => {
-//     res.render("home");
-// });
 app.get("/home", async (req, res) => {
     try {
         const contacts = await Contact.find();
@@ -68,13 +64,9 @@ app.get("/home", async (req, res) => {
     }
 });
 
-app.get("/orders", (req, res) => {
-    res.redirect('/orders');
-});
-
-// Default route
+// Health check
 app.get("/Backend-says", (req, res) => {
-    res.send("🟢");
+    res.send("🟢 Render Backend Running");
 });
 
 // Show login page
@@ -82,29 +74,23 @@ app.get('/', (req, res) => {
     res.render('login');
 });
 
-// Handle login form submission
+// Handle login
 app.post('/user/login', async (req, res) => {
     const { email, password } = req.body;
 
     try {
         const user = await User.findOne({ email });
-        if (!user) {
-            return res.status(401).send('User not found');
-        }
+        if (!user) return res.status(401).send('User not found');
 
         const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(401).send('Invalid password');
-        }
+        if (!isMatch) return res.status(401).send('Invalid password');
 
-        // Create JWT token
         const token = jwt.sign(
             { id: user._id, role: user.role, email: user.email },
             process.env.JWT_SECRET,
             { expiresIn: '1h' }
         );
 
-        // You can send the token in a cookie or JSON response; here we just send JSON:
         res.json({
             message: 'Login successful',
             token,
@@ -116,23 +102,15 @@ app.post('/user/login', async (req, res) => {
                 role: user.role
             }
         });
-
-        // Or redirect somewhere after login, e.g.
-        // res.redirect('/dashboard');
-
     } catch (error) {
         console.error('Login error:', error);
         res.status(500).send('Server error');
     }
 });
 
-// Start the server
-const PORT = process.env.PORT || 8080;
-
-// app.listen(PORT, () => {
-//     console.log(`✅ Server is running on port ${PORT}`);
-// });
+// ✅ Only use Render's provided PORT
+const PORT = process.env.PORT;
 
 app.listen(PORT, () => {
-    console.log(`✅ Server is running on http://localhost:${PORT}`);
+    console.log(`✅ Server running on https://back-wksz.onrender.com`);
 });
