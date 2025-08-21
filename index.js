@@ -1,5 +1,5 @@
 require('dotenv').config();
-const path = require('path');
+// const path = require('path');
 const cors = require('cors');
 const express = require('express');
 const cookieParser = require('cookie-parser');
@@ -8,7 +8,9 @@ const userRoutes = require("./Routes/user");
 const menuRouter = require('./Routes/menu');
 const contactRoutes = require('./Routes/contact');
 const paymentRoutes = require('./Routes/payment');
+const galleryRouter = require('./Routes/gallery');
 
+const Gallery = require('./Models/gallery');
 const Contact = require('./Models/contact');
 const Menu = require('./Models/menu');
 const User = require('./Models/user');
@@ -28,9 +30,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Middleware
 app.use(cors({
-    origin: 'https://kaushik-six.vercel.app',
+    origin: ['https://kaushik-six.vercel.app'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true  // ✅ allow cookies
+    credentials: true
 }));
 
 app.use(express.urlencoded({ extended: true }));
@@ -45,19 +47,29 @@ app.use("/menu", menuRouter);
 app.use("/contact", contactRoutes);
 app.use("/user", userRoutes);
 app.use('/payment', paymentRoutes);
+app.use('/gallery', galleryRouter);
 
-// Home route
-// app.get("/home", (req, res) => {
-//     res.render("home");
-// });
+// If using app.js or main server file
+app.get('/menu', authenticateJWT, authorizeRoles('admin'), async (req, res) => {
+    try {
+        const menuItems = await Menu.find(); // fetch menus from database
+        res.render('menu/index', { menuItems }); // or send JSON or render appropriate EJS page
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server Error');
+    }
+});
+
 app.get("/home", async (req, res) => {
     try {
+        const galleryItems = await Gallery.find();
         const contacts = await Contact.find();
         const menuItems = await Menu.find();
         const users = await User.find();
         const orders = await Payment.find();
 
         res.render("home", {
+            galleryItems,
             contacts,
             menuItems,
             users,
@@ -74,12 +86,12 @@ app.get("/orders", (req, res) => {
 });
 
 // Default route
-app.get("/Backend-says", (req, res) => {
-    res.send("🟢");
+app.get("/", (req, res) => {
+    res.send("Backend running");
 });
 
 // Show login page
-app.get('/', (req, res) => {
+app.get('/login', (req, res) => {
     res.render('login');
 });
 
@@ -106,9 +118,14 @@ app.post('/user/login', async (req, res) => {
         );
 
         // You can send the token in a cookie or JSON response; here we just send JSON:
-        res.json({
+        // ✅ Cookie settings for cross-site requests
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'None',
+            maxAge: 60 * 60 * 1000
+        }).json({
             message: 'Login successful',
-            token,
             user: {
                 id: user._id,
                 email: user.email,
@@ -117,6 +134,7 @@ app.post('/user/login', async (req, res) => {
                 role: user.role
             }
         });
+
 
         // Or redirect somewhere after login, e.g.
         // res.redirect('/dashboard');
