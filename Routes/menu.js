@@ -8,7 +8,7 @@ const Menu = require('../Models/menu');
 const {
     getAllMenuItems,
     getAllCategories
-} = require('../controllers/menu');
+} = require('../Controllers/menu');
 const { authenticateJWT, authorizeRoles } = require('../middleware/auth');
 
 // Multer setup
