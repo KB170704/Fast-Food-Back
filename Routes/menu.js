@@ -64,6 +64,7 @@ router.post('/create', authenticateJWT, authorizeRoles('admin'), upload.array('p
 router.post('/:id', authenticateJWT, authorizeRoles('admin'), upload.array('photos', 10), async (req, res) => {
     try {
         const updates = req.body;
+
         if (req.files && req.files.length > 0) {
             const photos = req.files.map(file => `${req.protocol}://${req.get('host')}/uploads/${file.filename}`);
             updates.photos = photos;
@@ -79,6 +80,7 @@ router.post('/:id', authenticateJWT, authorizeRoles('admin'), upload.array('phot
         res.status(500).send('Server error');
     }
 });
+
 
 
 // Anyone logged in can view
