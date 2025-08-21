@@ -28,7 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Middleware
 app.use(cors({
-    origin: 'http://localhost:3000', // your React app
+    origin: 'https://kaushik-six.vercel.app', // your React app
     credentials: true  // ✅ allow cookies
 }));
 
@@ -127,7 +127,10 @@ app.post('/user/login', async (req, res) => {
 });
 
 // Start the server
-const PORT = process.env.PORT || 8080;
+// const PORT = process.env.PORT || 8080;
+// app.listen(PORT, () => {
+//     console.log(`✅ Server is running on port ${PORT}`);
+// });
 app.listen(PORT, () => {
-    console.log(`✅ Server is running on port ${PORT}`);
+    console.log(`✅ Server is running on http://localhost:${PORT}`);
 });
