@@ -28,13 +28,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Middleware
 app.use(cors({
-    origin: [
-        "http://localhost:3000",
-        "https://kaushik-six.vercel.app"
-    ],
+    origin: "https://kaushik-six.vercel.app",
     credentials: true
 }));
-
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
