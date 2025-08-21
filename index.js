@@ -8,7 +8,6 @@ const userRoutes = require("./Routes/user");
 const menuRouter = require('./Routes/menu');
 const contactRoutes = require('./Routes/contact');
 const paymentRoutes = require('./Routes/payment');
-const galleryRouter = require('./Routes/gallery');
 
 const Gallery = require('./Models/gallery');
 const Contact = require('./Models/contact');
