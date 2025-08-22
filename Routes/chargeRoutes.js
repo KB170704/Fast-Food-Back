@@ -1,7 +1,7 @@
 // routes/chargeRoutes.js
 const express = require("express");
 const router = express.Router();
-const chargeController = require("../controllers/chargeController");
+const chargeController = require("../Controllers/chargeController");
 
 // Show all
 router.get("/", chargeController.getCharges);
