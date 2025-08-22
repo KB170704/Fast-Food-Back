@@ -15,7 +15,7 @@ const User = require('./Models/user');
 const Payment = require('./Models/order');
 const bcrypt = require('bcryptjs'); // Required for login
 const jwt = require('jsonwebtoken'); // Required for JWT login
-
+const { authenticateJWT, authorizeRoles } = require('./middleware/auth');
 const app = express();
 
 // Connect to the database
@@ -28,7 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Middleware
 app.use(cors({
-    origin: ['https://kaushik-six.vercel.app'],
+    origin: ['http://localhost:3000'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
@@ -58,7 +58,6 @@ app.get('/menu', authenticateJWT, authorizeRoles('admin'), async (req, res) => {
 
 app.get("/home", async (req, res) => {
     try {
-        const galleryItems = await Gallery.find();
         const contacts = await Contact.find();
         const menuItems = await Menu.find();
         const users = await User.find();
