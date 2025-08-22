@@ -5,16 +5,20 @@
     <title>Menu Items</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Segoe UI", Arial, sans-serif;
             margin: 20px;
             background: #f5f5f5;
+            color: #333;
         }
 
         h1 {
             text-align: center;
             margin-bottom: 20px;
+            font-size: 2rem;
+            color: #1f2937;
         }
 
+        /* Home & Add Buttons */
         .home-btn {
             display: inline-block;
             margin-bottom: 20px;
@@ -22,14 +26,17 @@
             color: #fff;
             text-decoration: none;
             padding: 8px 16px;
-            border-radius: 5px;
+            border-radius: 8px;
             font-weight: bold;
-            transition: 0.3s;
+            font-size: 0.95rem;
+            transition: background 0.3s, transform 0.2s;
         }
         .home-btn:hover {
             background-color: #059669;
+            transform: translateY(-2px);
         }
 
+        /* Menu Container */
         .menu-list {
             display: flex;
             flex-wrap: wrap;
@@ -37,67 +44,103 @@
             justify-content: center;
         }
 
+        /* Menu Card */
         .menu-item {
             background: #fff;
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
-            width: 300px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            width: 320px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.12);
             transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
         }
         .menu-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            transform: translateY(-6px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.18);
         }
 
+        /* Menu Image */
         .menu-item img {
             width: 100%;
             height: 200px;
             object-fit: cover;
         }
 
+        /* Details Area */
         .menu-item .details {
-            padding: 10px;
+            padding: 15px;
+            flex: 1;
         }
 
         .menu-item h2 {
-            margin: 0;
-            font-size: 1.2rem;
-            color: #333;
+            margin: 0 0 8px;
+            font-size: 1.25rem;
+            color: #1d4ed8;
         }
 
         .menu-item p {
             margin: 5px 0;
-            font-size: 0.9rem;
-            color: #555;
+            font-size: 0.88rem;
+            color: #444;
         }
 
+        /* Highlight Price */
+        .menu-item .price {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #16a34a;
+        }
+        .menu-item .discount {
+            color: #d97706;
+            font-weight: 600;
+        }
+
+        /* Category Badge */
+        .badge {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0369a1;
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 50px;
+            margin-top: 5px;
+        }
+
+        /* Photo Gallery */
         .menu-item .photo-gallery {
             display: flex;
             flex-wrap: wrap;
-            gap: 5px;
-            margin-top: 5px;
+            gap: 6px;
+            margin-top: 10px;
         }
         .menu-item .photo-gallery img {
-            width: 50px;
-            height: 50px;
+            width: 55px;
+            height: 55px;
             object-fit: cover;
-            border-radius: 5px;
-            border: 1px solid #ccc;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            transition: transform 0.25s ease;
+        }
+        .menu-item .photo-gallery img:hover {
+            transform: scale(1.1);
+            border-color: #2563eb;
         }
 
+        /* Actions */
         .menu-item .actions {
             display: flex;
             justify-content: space-between;
-            margin-top: 10px;
+            margin-top: 12px;
         }
         .menu-item .actions a {
             text-decoration: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.9rem;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
             color: #fff;
-            transition: 0.3s;
+            transition: background 0.3s, transform 0.2s;
         }
         .menu-item .actions .edit {
             background-color: #3b82f6;
@@ -107,18 +150,20 @@
         }
         .menu-item .actions .edit:hover {
             background-color: #2563eb;
+            transform: scale(1.05);
         }
         .menu-item .actions .delete:hover {
             background-color: #dc2626;
+            transform: scale(1.05);
         }
     </style>
 </head>
 <body>
 
 <!-- Home Button -->
-<a href="/home" class="home-btn">Home</a>
-<a href="/menu/create" class="home-btn">add menu</a>
-<h1>Menu Items</h1>
+<a href="/home" class="home-btn">🏠 Home</a>
+<a href="/menu/create" class="home-btn">➕ Add Menu</a>
+<h1>🍽️ Menu Items</h1>
 
 <div class="menu-list">
     <% if (menuItems && menuItems.length > 0) { %>
@@ -132,14 +177,13 @@
                 <!-- Details -->
                 <div class="details">
                     <h2><%= item.Name %></h2>
-                    <p><strong>Description:</strong> <%= item.Description %></p>
-                    <p><strong>Price:</strong> ₹<%= item.price %> | <strong>Final Price:</strong> ₹<%= item.finalPrice %></p>
-                    <p><strong>Discount:</strong> <%= item.discount %>%</p>
-                    <p><strong>Category:</strong> <%= item.category %></p>
+                    <p class="price">Price: ₹<%= item.price %> → ₹<%= item.finalPrice %></p>
+                    <p class="discount">Discount: <%= item.discount %>%</p>
+                    <span class="badge"><%= item.category %></span>
                     <p><strong>Type:</strong> <%= item.type %></p>
                     <p><strong>Unit:</strong> <%= item.unitNumber %> <%= item.unit %></p>
-                    <p><strong>Delivery Time:</strong> <%= item.deliveryTime %> mins</p>
-                    <p><strong>FSSAI License:</strong> <%= item.fssaiLicense %></p>
+                    <p><strong>Delivery:</strong> ⏱ <%= item.deliveryTime %> mins</p>
+                    <p><strong>FSSAI:</strong> <%= item.fssaiLicense %></p>
                     <p><strong>Shelf Life:</strong> <%= item.shelfLife %></p>
                     <p><strong>Return Policy:</strong> <%= item.returnPolicy %></p>
                     <p><strong>Storage Tips:</strong> <%= item.storageTips %></p>
@@ -158,8 +202,8 @@
 
                     <!-- Actions -->
                     <div class="actions">
-                        <a href="/menu/edit/<%= item._id %>" class="edit">Edit</a>
-                        <a href="/menu/delete/<%= item._id %>" class="delete" onclick="return confirm('Are you sure to delete this item?');">Delete</a>
+                        <a href="/menu/edit/<%= item._id %>" class="edit">✏️ Edit</a>
+                        <a href="/menu/delete/<%= item._id %>" class="delete" onclick="return confirm('Are you sure to delete this item?');">🗑️ Delete</a>
                     </div>
                 </div>
             </div>

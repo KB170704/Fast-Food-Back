@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Charges</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="p-6 bg-gray-100">
+<h1 class="text-2xl font-bold mb-4">Charges Management</h1>
+<a href="/charges/add" class="bg-green-500 text-white px-4 py-2 rounded">+ Add New Charge</a>
+
+<table class="w-full mt-6 bg-white shadow rounded">
+    <thead class="bg-gray-200">
+    <tr>
+        <th class="p-2">Name</th>
+        <th class="p-2">Amount</th>
+        <th class="p-2">Free Above</th>
+        <th class="p-2">Active</th>
+        <th class="p-2">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% charges.forEach(charge => { %>
+        <tr class="border-b">
+            <td class="p-2"><%= charge.name %></td>
+            <td class="p-2">₹<%= charge.amount %></td>
+            <td class="p-2"><%= charge.freeAbove || "N/A" %></td>
+            <td class="p-2"><%= charge.active ? "Yes" : "No" %></td>
+            <td class="p-2">
+                <a href="/charges/edit/<%= charge._id %>" class="bg-blue-500 text-white px-3 py-1 rounded">Edit</a>
+                <a href="/charges/delete/<%= charge._id %>" onclick="return confirm('Delete?')" class="bg-red-500 text-white px-3 py-1 rounded">Delete</a>
+            </td>
+        </tr>
+    <% }) %>
+    </tbody>
+</table>
+</body>
+</html>

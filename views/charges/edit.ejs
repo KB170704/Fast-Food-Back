@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Charge</title>
+</head>
+<body class="p-6">
+<h1 class="text-xl font-bold mb-4">Edit Charge</h1>
+<form method="POST" action="/charges/edit/<%= charge._id %>" class="space-y-4">
+    <input type="text" name="name" value="<%= charge.name %>" required class="border p-2 w-full">
+    <input type="number" name="amount" value="<%= charge.amount %>" required class="border p-2 w-full">
+    <input type="number" name="freeAbove" value="<%= charge.freeAbove %>" class="border p-2 w-full">
+    <label>
+        <input type="checkbox" name="active" <%= charge.active ? "checked" : "" %>> Active
+    </label>
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Update</button>
+</form>
+</body>
+</html>

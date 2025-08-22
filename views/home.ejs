@@ -3,15 +3,53 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Admin Dashboard</title>
+
+    <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+
+    <!-- AlpineJS -->
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.10.3/dist/cdn.min.js" defer></script>
+
+    <!-- Swiper -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
+    <!-- Custom CSS -->
+    <style>
+        /* General Card Styling */
+        .card {
+            background: #fff;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Menu Item Card - Compact */
+        .menu-card {
+            padding: 0.75rem; /* smaller padding */
+        }
+
+        .menu-card h3 {
+            font-size: 1rem;
+            line-height: 1.3;
+        }
+
+        .menu-card p {
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Image size tweak */
+        .menu-card img {
+            height: 120px; /* smaller image */
+            object-fit: cover;
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100 font-sans">
 <div class="flex">
-
     <!-- Sidebar -->
     <div class="sidebar w-64 fixed bg-gray-900 text-white h-screen shadow-lg flex flex-col">
         <h2 class="text-2xl font-bold p-6 border-b border-gray-800">📊 Dashboard</h2>
@@ -59,37 +97,37 @@
                 <h2 class="text-2xl font-semibold text-blue-800">🍽️ Menu Items</h2>
                 <div class="space-x-2">
                     <a href="/menu" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">📃 View All</a>
-                    <a href="/menu/create" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">➕ Add New</a>
+                    <a href="/menu/create" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">➕ Add
+                        New</a>
                 </div>
             </div>
             <% if (menuItems.length === 0) { %>
                 <p class="text-gray-600">No menu items available.</p>
             <% } else { %>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <% menuItems.forEach(item => { %>
-                        <div class="bg-white rounded-xl shadow hover:shadow-lg transition p-4">
+                        <div class="bg-white rounded-xl shadow hover:shadow-lg transition menu-card">
                             <% if (item.photos && item.photos.length > 0) { %>
-                                <div class="swiper mySwiper mb-3 rounded-lg overflow-hidden">
+                                <div class="swiper mySwiper mb-2 rounded-lg overflow-hidden">
                                     <div class="swiper-wrapper">
                                         <% item.photos.forEach(photo => { %>
                                             <div class="swiper-slide">
-                                                <img src="<%= photo %>" alt="<%= item.Name %>" class="w-full h-40 object-cover">
+                                                <img src="<%= photo %>" alt="<%= item.Name %>"/>
                                             </div>
                                         <% }) %>
                                     </div>
                                     <div class="swiper-pagination"></div>
                                 </div>
                             <% } %>
-
-                            <h3 class="text-lg font-bold text-blue-700"><%= item.Name %></h3>
-                            <p class="text-sm mt-1">💵 Price: ₹<%= item.price %> | Final: ₹<%= item.finalPrice %></p>
-                            <p class="text-xs mt-1 text-gray-600">Discount: <%= item.discount %>%</p>
-                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full mt-2 inline-block">
-                            <%= item.category %>
-                        </span>
-                            <p class="text-xs mt-1">Type: <%= item.type %>, Unit: <%= item.unitNumber %> <%= item.unit %></p>
-                            <p class="text-xs mt-1">⏱ Delivery: <%= item.deliveryTime %> mins</p>
-                            <p class="text-xs mt-1">🛒 Shelf Life: <%= item.shelfLife %></p>
+                            <h3 class="text-blue-700 font-bold"><%= item.Name %></h3>
+                            <p>💵 ₹<%= item.price %> → ₹<%= item.finalPrice %></p>
+                            <p>Discount: <%= item.discount %>%</p>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-0.5 rounded-full inline-block">
+                                    <%= item.category %>
+                                </span>
+                            <p>Type: <%= item.type %>, <%= item.unitNumber %> <%= item.unit %></p>
+                            <p>⏱ <%= item.deliveryTime %> mins</p>
+                            <p>🛒 <%= item.shelfLife %></p>
                         </div>
                     <% }) %>
                 </div>
@@ -102,7 +140,8 @@
                 <h2 class="text-2xl font-semibold text-blue-800">👥 Registered Users</h2>
                 <div>
                     <a href="/user/all" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">📋 View</a>
-                    <a href="/user/add" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">➕ Add User</a>
+                    <a href="/user/add" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">➕ Add
+                        User</a>
                 </div>
             </div>
             <% if (users.length === 0) { %>
@@ -129,8 +168,10 @@
                                 <td class="px-4 py-2 capitalize"><%= user.role %></td>
                                 <td class="px-4 py-2"><%= new Date(user.createdAt).toLocaleDateString() %></td>
                                 <td class="px-4 py-2 flex gap-2">
-                                    <a href="/user/edit/<%= user._id %>" class="bg-yellow-400 px-3 py-1 rounded text-sm">✏️</a>
-                                    <a href="/user/delete/<%= user._id %>" onclick="return confirm('Delete this user?');"
+                                    <a href="/user/edit/<%= user._id %>"
+                                       class="bg-yellow-400 px-3 py-1 rounded text-sm">✏️</a>
+                                    <a href="/user/delete/<%= user._id %>"
+                                       onclick="return confirm('Delete this user?');"
                                        class="bg-red-500 px-3 py-1 text-white rounded text-sm">🗑️</a>
                                 </td>
                             </tr>
@@ -143,7 +184,10 @@
 
         <!-- Contacts Section -->
         <section id="contacts" class="card mb-12">
-            <h2 class="text-2xl font-semibold text-blue-800 mb-6">📨 Contact Submissions</h2>
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-semibold text-blue-800 mb-6">📨 Contact Submissions</h2>
+                <a href="/Contact" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">📋 View</a>
+            </div>
             <% if (contacts.length === 0) { %>
                 <p class="text-gray-600">No contact submissions yet.</p>
             <% } else { %>
@@ -151,8 +195,10 @@
                     <div class="bg-white p-4 rounded-lg shadow mb-4">
                         <p><strong>Name:</strong> <%= contact.name %></p>
                         <p><strong>Email:</strong> <%= contact.email %></p>
-                        <p><strong>Message:</strong> <span class="text-sm text-gray-700"><%= contact.message %></span></p>
-                        <p class="text-xs text-gray-500 mt-2">📅 Submitted at: <%= new Date(contact.createdAt).toLocaleString() %></p>
+                        <p><strong>Message:</strong> <span class="text-sm text-gray-700"><%= contact.message %></span>
+                        </p>
+                        <p class="text-xs text-gray-500 mt-2">📅 Submitted
+                            at: <%= new Date(contact.createdAt).toLocaleString() %></p>
                     </div>
                 <% }) %>
             <% } %>
@@ -160,7 +206,10 @@
 
         <!-- Orders Section -->
         <section id="orders" class="card mb-12">
-            <h2 class="text-2xl font-semibold text-orange-700 mb-6">💰 Payment Orders</h2>
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-semibold text-orange-700 mb-6">💰 Payment Orders</h2>
+                <a href="/Payment/all" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">📋 View</a>
+            </div>
             <% if (orders.length === 0) { %>
                 <p class="text-gray-600">No orders yet.</p>
             <% } else { %>
@@ -195,14 +244,16 @@
 
 <!-- Swiper Init -->
 <script>
-    document.querySelectorAll('.mySwiper').forEach(swiper => {
+    document.querySelectorAll('.mySwiper').forEach((swiper) => {
         new Swiper(swiper, {
             loop: true,
             slidesPerView: 1,
-            pagination: { el: swiper.querySelector('.swiper-pagination'), clickable: true },
+            pagination: {
+                el: swiper.querySelector('.swiper-pagination'),
+                clickable: true
+            },
         });
     });
 </script>
-
 </body>
 </html>
