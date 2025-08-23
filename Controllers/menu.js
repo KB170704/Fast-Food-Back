@@ -26,7 +26,16 @@ const getAllMenuItems = async (req, res) => {
 // Add a new menu item
 const addMenuItem = async (req, res) => {
     try {
-        const { Name, Description, price, category, type, fssaiLicense, shelfLife, returnPolicy, storageTips, unitNumber, unit, keyFeatures, manufacturerName, manufacturerAddress, customerCareDetails, deliveryTime, discount } = req.body;
+        const {
+            Name,
+            Description,
+            price,
+            category,
+            type,
+            fssaiLicense,
+            shelfLife,
+            returnPolicy,
+            storageTips, unitNumber, unit, keyFeatures, manufacturerName, manufacturerAddress, customerCareDetails, deliveryTime, discount } = req.body;
 
         const photos = req.files ? req.files.map(file => `${req.protocol}://${req.get('host')}/uploads/${file.filename}`) : [];
         const primaryPhoto = photos[0] || null;
@@ -50,7 +59,8 @@ const addMenuItem = async (req, res) => {
             deliveryTime,
             discount,
             photos,
-            primaryPhoto
+            primaryPhoto,
+            details: dynamicDetails,
         });
 
         const savedItem = await newItem.save();
@@ -62,29 +72,37 @@ const addMenuItem = async (req, res) => {
 };
 
 // Update an existing menu item
+// Update a menu item
 const updateMenuItem = async (req, res) => {
     try {
         const { id } = req.params;
-        const updates = req.body;
-        let photoUrl = updates.photo;
 
-        if (req.file) {
-            photoUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+        let details = {};
+        if (req.body.details) {
+            if (Array.isArray(req.body.details)) {
+                req.body.details.forEach(d => {
+                    if (d.key && d.value) details[d.key] = d.value;
+                });
+            } else if (req.body.details.key && req.body.details.value) {
+                details[req.body.details.key] = req.body.details.value;
+            }
         }
 
-        const updatedItem = await Menu.findByIdAndUpdate(
-            id,
-            { ...updates, photo: photoUrl },
-            { new: true }
-        );
+        let updates = { ...req.body, details };
 
-        if (!updatedItem) {
-            return res.status(404).json({ message: "Menu item not found" });
+        if (req.files && req.files.length > 0) {
+            const photos = req.files.map(file => `${req.protocol}://${req.get('host')}/uploads/${file.filename}`);
+            updates.photos = photos;
+            updates.primaryPhoto = photos;
         }
 
-        res.status(200).json(updatedItem);
+        const updatedItem = await Menu.findByIdAndUpdate(id, updates, { new: true });
+        if (!updatedItem) return res.status(404).send('Menu item not found');
+
+        res.redirect('/menu');
     } catch (err) {
-        res.status(400).json({ error: err.message });
+        console.error('Error updating menu item:', err);
+        res.status(500).send('Server error');
     }
 };
 

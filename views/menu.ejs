@@ -156,6 +156,31 @@
             background-color: #dc2626;
             transform: scale(1.05);
         }
+        .extra-details {
+            margin-top: 10px;
+            background: #f9fafb;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+        }
+        .extra-details h4 {
+            margin: 0 0 8px;
+            font-size: 0.9rem;
+            color: #111827;
+        }
+        .extra-details ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .extra-details li {
+            font-size: 0.85rem;
+            padding: 3px 0;
+            border-bottom: 1px dashed #ddd;
+        }
+        .extra-details li:last-child {
+            border-bottom: none;
+        }
     </style>
 </head>
 <body>
@@ -190,6 +215,25 @@
                     <p><strong>Key Features:</strong> <%= item.keyFeatures %></p>
                     <p><strong>Manufacturer:</strong> <%= item.manufacturerName %>, <%= item.manufacturerAddress %></p>
                     <p><strong>Customer Care:</strong> <%= item.customerCareDetails %></p>
+
+
+
+
+                    <% if (item.details && Object.keys(item.details).length > 0) { %>
+                        <div class="extra-details">
+                            <h4>Additional Details</h4>
+                            <ul>
+                                <% Object.entries(item.details).forEach(([key, value]) => { %>
+                                    <li><strong><%= key %>:</strong> <%= value %></li>
+                                <% }) %>
+                            </ul>
+                        </div>
+                    <% } %>
+
+
+
+
+
 
                     <!-- Photo Gallery -->
                     <% if (item.photos && item.photos.length > 0) { %>

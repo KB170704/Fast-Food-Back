@@ -122,14 +122,28 @@
     <!-- Photos -->
     <label>Current Photos:</label>
     <div id="currentPhotosContainer">
-        <% if(menuItem.photo && menuItem.photo.length > 0) { %>
-            <% menuItem.photo.forEach((p,i) => { %>
+        <% if(menuItem.photos && menuItem.photos.length > 0) { %>
+            <% menuItem.photos.forEach((p,i) => { %>
                 <img src="<%= p %>" alt="Photo <%= i+1 %>" class="preview" />
             <% }) %>
         <% } else { %>
-            <p>No photos uploaded.</p>
+        <p>No photos uploaded.</p>
         <% } %>
     </div>
+
+    <div id="details-container">
+        <% if(menuItem.details && Object.keys(menuItem.details).length > 0) { %>
+            <% Object.entries(menuItem.details).forEach(([key, value], index) => { %>
+                <div class="flex-row">
+                    <div><input type="text" name="details[<%= index %>][key]" value="<%= key %>" placeholder="Field Name" required></div>
+                    <div><input type="text" name="details[<%= index %>][value]" value="<%= value %>" placeholder="Field Value" required></div>
+                    <button type="button" onclick="this.parentElement.remove()">X</button>
+                </div>
+            <% }) %>
+        <% } %>
+    </div>
+
+    <button type="button" onclick="addDetailField()">Add Detail</button>
 
     <label for="photos">Change / Add Photos:</label>
     <input type="file" name="photos" id="photo" accept="image/*" multiple>
@@ -140,6 +154,24 @@
         <a href="/menu" class="btn btn-back">← Back to Menu</a>
     </div>
 </form>
+
+<script>
+    let detailIndex = <%= menuItem.details ? Object.keys(menuItem.details).length : 0 %>;
+
+    function addDetailField(key = '', value = '') {
+        const container = document.getElementById('details-container');
+        const div = document.createElement('div');
+        div.classList.add("flex-row");
+
+        div.innerHTML = `
+      <div><input type="text" name="details[${detailIndex}][key]" placeholder="Field Name" value="${key}" required></div>
+      <div><input type="text" name="details[${detailIndex}][value]" placeholder="Field Value" value="${value}" required></div>
+      <button type="button" onclick="this.parentElement.remove()">X</button>
+    `;
+        container.appendChild(div);
+        detailIndex++;
+    }
+</script>
 
 <script>
     // Price + Discount calculation

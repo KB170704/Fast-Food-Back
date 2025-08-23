@@ -22,12 +22,16 @@ const menuSchema = mongoose.Schema({
     photos: [{ type: String }], // multiple photos
     primaryPhoto: { type: String }, // first photo as primary
     deliveryTime: { type: Number }, // in minutes
+    // ✅ Dynamic fields (any structure allowed)
+    details: {
+        type: Map,
+        of: String,
+        default: {}
+    }
 }, { timestamps: true });
-
 // Virtual for calculating price after discount
 menuSchema.virtual('finalPrice').get(function () {
     if (!this.discount) return this.price;
     return this.price - (this.price * this.discount) / 100;
 });
-
 module.exports = mongoose.model('Menu', menuSchema);

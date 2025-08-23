@@ -102,6 +102,73 @@
         margin-top: 10px;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
       }
+
+      #details-container {
+          margin: 15px 0;
+      }
+
+      .detail-row {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          /*margin-bottom: 10px;*/
+      }
+
+      .detail-row input[type="text"] {
+          flex: 1;
+          width: 200px;
+          padding: 8px 10px;
+          border: 1px solid #ccc;
+          border-radius: 6px;
+          margin: 5px;
+          font-size: 14px;
+          background-color: #fff;
+      }
+
+      .detail-row input[type="text"]:focus {
+          border-color: #007bff;
+          outline: none;
+          box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+      }
+
+      .detail-row button {
+          background: #dc3545;
+          color: #fff;
+          border: none;
+          padding: 8px 10px;
+          border-radius: 6px;
+          cursor: pointer;
+          font-size: 14px;
+          transition: background 0.2s ease;
+      }
+
+      .detail-row button:hover {
+          background: #b52b3a;
+      }
+
+      /* Style for the Add Detail button */
+      button[onclick*="addDetailField"] {
+          margin-top: 10px;
+          background: #28a745;
+          color: #fff;
+          border: none;
+          padding: 8px 16px;
+          border-radius: 6px;
+          cursor: pointer;
+          font-size: 14px;
+          width: 80px;
+          transition: background 0.2s ease;
+      }
+
+      button[onclick*="addDetailField"]:hover {
+          background: #218838;
+      }
+
+      .Add-More{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+      }
     </style>
   </head>
   <body>
@@ -191,8 +258,32 @@
 
             <div class="preview" id="imagePreview"></div>
 
+            <!-- 🔹 Dynamic Details Section -->
+            <div class="Add-More">
+                <h3>Additional Details</h3>
+                <button type="button" onclick="addDetailField()">Add</button>
+            </div>
+            <div id="details-container">
+            </div>
             <button type="submit">Add Menu Item</button>
         </form>
+
+        <script>
+            let detailIndex = 0;
+            function addDetailField(key = '', value = '') {
+                const container = document.getElementById('details-container');
+                const div = document.createElement('div');
+                div.classList.add("detail-row");
+
+                div.innerHTML = `
+        <input type="text" name="details[0][key]" placeholder="Field Name" value="${key}" required>
+        <input type="text" name="details[0][value]" placeholder="Field Value" value="${value}" required>
+        <button type="button" onclick="this.parentElement.remove()">X</button>
+      `;
+                container.appendChild(div);
+                detailIndex++;
+            }
+        </script>
 
         <script>
             const photoInput = document.getElementById("photoInput");
