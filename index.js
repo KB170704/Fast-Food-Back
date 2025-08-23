@@ -90,7 +90,7 @@ app.get("/Back-End-Says", (req, res) => {
 });
 
 // Show login page
-app.get('/login', (req, res) => {
+app.get('/', (req, res) => {
     res.render('login');
 });
 
