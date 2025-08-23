@@ -85,7 +85,7 @@ app.get("/orders", (req, res) => {
 });
 
 // Default route
-app.get("/", (req, res) => {
+app.get("/Back-End-Says", (req, res) => {
     res.send("Backend running");
 });
 
