@@ -32,7 +32,7 @@ app.use(express.urlencoded({extended: true}));
 
 // Middleware
 app.use(cors({
-    origin: ['https://back-wksz.onrender.com'],
+    origin: ['https://kaushik-six.vercel.app'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
