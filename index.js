@@ -32,7 +32,7 @@ app.use(express.urlencoded({extended: true}));
 
 // Middleware
 app.use(cors({
-    origin: ['http://localhost:3000'],
+    origin: ['https://back-wksz.onrender.com'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
