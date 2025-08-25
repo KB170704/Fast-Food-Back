@@ -4,19 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4b689a0a-9348-4cae-92ca-bd29dad1ff18" name="Changes" comment="Home Additional details">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/menu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/Models/menu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Routes/menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/Routes/menu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/1755786500240.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/addUser.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/addUser.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/create.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/create.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/edit.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/edit.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/login.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/login.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/menu.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/menu.ejs" afterDir="false" />
-    </list>
+    <list default="true" id="4b689a0a-9348-4cae-92ca-bd29dad1ff18" name="Changes" comment="Home all done" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -99,7 +87,7 @@
       <workItem from="1756009692998" duration="946000" />
       <workItem from="1756012493393" duration="14340000" />
       <workItem from="1756056182782" duration="3114000" />
-      <workItem from="1756099740825" duration="5098000" />
+      <workItem from="1756099740825" duration="5290000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <option name="closed" value="true" />
@@ -261,7 +249,23 @@
       <option name="project" value="LOCAL" />
       <updated>1755970914957</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Home all done">
+      <option name="closed" value="true" />
+      <created>1756106032484</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1756106032484</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Home all done">
+      <option name="closed" value="true" />
+      <created>1756106131338</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1756106131338</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -279,6 +283,7 @@
     <MESSAGE value="JBS" />
     <MESSAGE value="JBS DONE" />
     <MESSAGE value="Home Additional details" />
-    <option name="LAST_COMMIT_MESSAGE" value="Home Additional details" />
+    <MESSAGE value="Home all done" />
+    <option name="LAST_COMMIT_MESSAGE" value="Home all done" />
   </component>
 </project>
