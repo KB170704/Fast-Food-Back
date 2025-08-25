@@ -17,7 +17,7 @@ const registerUser = async (req, res) => {
         }
 
         // Save user
-        const user = new User({ firstName, lastName, email, password, contact, role: role || "employee" });
+        const user = new User({ firstName, lastName, email, password, contact, role: role || "user" });
         await user.save();
 
         res.status(201).json({ message: "User registered successfully", user });
