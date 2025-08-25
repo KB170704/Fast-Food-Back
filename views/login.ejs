@@ -19,21 +19,70 @@
         margin: 0;
       }
 
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+      }
+
       h1 {
         color: white;
         text-align: center;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
         font-weight: 700;
         letter-spacing: 1px;
       }
 
+      /* ===== Table Styling ===== */
+      .info-box {
+        background: white;
+        padding: 1rem 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        text-align: center;
+        width: 450px;
+      }
+
+      .info-box p {
+        font-weight: bold;
+        color: #000dff;
+        margin-bottom: 0.8rem;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.95rem;
+      }
+
+      thead {
+        background-color: #000dff;
+        color: white;
+      }
+
+      th,
+      td {
+        padding: 10px 12px;
+        border: 1px solid #ddd;
+        text-align: center;
+      }
+
+      tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      tbody tr:hover {
+        background-color: #f0f0ff;
+      }
+
+      /* ===== Login Form Styling ===== */
       form#loginForm {
         background: white;
         padding: 2rem;
         border-radius: 12px;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
         width: 450px;
-          height: 100%;
         display: flex;
         flex-direction: column;
       }
@@ -72,52 +121,57 @@
     </style>
   </head>
   <body>
-    <div>
-<div>
-                <table border="1" cellSpacing="0" cellPadding="8">
-                    <thead>
-                        <th>password : kb@123</th>
-                    <tr>
-                        <th>Email</th>
-                        <th>Role</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>zp@gmail.com</td>
-                        <td>Employee</td>
-                    </tr>
-                    <tr>
-                        <td>neel@gmail.com</td>
-                        <td>User</td>
-                    </tr>
-                    <tr>
-                        <td>kb@gmail.com</td>
-                        <td>Admin</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+    <div class="container">
+      <!-- User Info Box -->
+      <div class="info-box">
+        <p>Default Password: <span style="color:#ff008c;">kb@123</span></p>
+        <table>
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>zp@gmail.com</td>
+              <td>Employee</td>
+            </tr>
+            <tr>
+              <td>neel@gmail.com</td>
+              <td>User</td>
+            </tr>
+            <tr>
+              <td>kb@gmail.com</td>
+              <td>Admin</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-      <h1>Login</h1>
-      <form id="loginForm" autocomplete="off">
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          required
-          autocomplete="email"
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          required
-          autocomplete="new-password"
-        />
-        <button type="submit">Login</button>
-      </form>
+      <!-- Login Form -->
+      <div>
+        <h1>Login</h1>
+        <form id="loginForm" autocomplete="off">
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            required
+            autocomplete="email"
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+            autocomplete="new-password"
+          />
+          <button type="submit">Login</button>
+        </form>
+      </div>
     </div>
+
     <script>
       document
         .getElementById("loginForm")
@@ -136,9 +190,7 @@
           const data = await response.json();
 
           if (response.ok) {
-            // ✅ Store token in cookie (expires in 1 day)
             document.cookie = `token=${data.token}; path=/; max-age=86400;`;
-
             window.location.href = "/home";
           } else {
             alert(data.message || "Login failed");
