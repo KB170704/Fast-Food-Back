@@ -107,18 +107,6 @@
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <% menuItems.forEach(item => { %>
                         <div class="bg-white rounded-xl shadow hover:shadow-lg transition menu-card">
-                            <% if (item.photos && item.photos.length > 0) { %>
-                                <div class="swiper mySwiper mb-2 rounded-lg overflow-hidden">
-                                    <div class="swiper-wrapper">
-                                        <% item.photos.forEach(photo => { %>
-                                            <div class="swiper-slide">
-                                                <img src="<%= photo %>" alt="<%= item.Name %>"/>
-                                            </div>
-                                        <% }) %>
-                                    </div>
-                                    <div class="swiper-pagination"></div>
-                                </div>
-                            <% } %>
                             <h3 class="text-blue-700 font-bold"><%= item.Name %></h3>
                             <p>💵 ₹<%= item.price %> → ₹<%= item.finalPrice %></p>
                             <p>Discount: <%= item.discount %>%</p>
