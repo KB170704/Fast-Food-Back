@@ -12,24 +12,17 @@ const {
 } = require('../Controllers/menu');
 const { authenticateJWT, authorizeRoles } = require('../middleware/auth');
 
+// Multer setup for image uploads
 const storage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, 'uploads/'),
     filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
 });
 const upload = multer({ storage });
 
-// Routes
-router.get('/create', authenticateJWT, authorizeRoles('admin'), (req, res) => res.render('create'));
-
-router.post('/create', authenticateJWT, authorizeRoles('admin'), upload.array('photos', 10), addMenuItem);
-
-router.get('/edit/:id', authenticateJWT, authorizeRoles('admin'), getMenuItemForEdit);
-
-router.post('/:id', authenticateJWT, authorizeRoles('admin'), upload.array('photos', 10), updateMenuItem);
-
-router.get('/item', authenticateJWT, getAllMenuItems);
-
-router.get('/item/:id', authenticateJWT, async (req, res) => {
+// ✅ Public Routes (no login required)
+router.get('/categories', getAllCategories);
+router.get('/item', getAllMenuItems);
+router.get('/item/:id', async (req, res) => {
     try {
         const menuItem = await require('../Models/menu').findById(req.params.id);
         if (!menuItem) return res.status(404).json({ message: 'Item not found' });
@@ -39,9 +32,19 @@ router.get('/item/:id', authenticateJWT, async (req, res) => {
     }
 });
 
-router.get('/categories', authenticateJWT, getAllCategories);
+// ✅ Protected Admin Routes
+router.get('/create', authenticateJWT, authorizeRoles('admin'), (req, res) => res.render('create'));
 
-router.get('/', authenticateJWT, async (req, res) => {
+router.post('/create', authenticateJWT, authorizeRoles('admin'), upload.array('photos', 10), addMenuItem);
+
+router.get('/edit/:id', authenticateJWT, authorizeRoles('admin'), getMenuItemForEdit);
+
+router.post('/:id', authenticateJWT, authorizeRoles('admin'), upload.array('photos', 10), updateMenuItem);
+
+router.get('/delete/:id', authenticateJWT, authorizeRoles('admin'), deleteMenuItem);
+
+// ✅ Admin menu dashboard page
+router.get('/', authenticateJWT, authorizeRoles('admin'), async (req, res) => {
     try {
         const menuItems = await require('../Models/menu').find();
         res.render('menu', { menuItems });
@@ -50,7 +53,5 @@ router.get('/', authenticateJWT, async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
-
-router.get('/delete/:id', authenticateJWT, authorizeRoles('admin'), deleteMenuItem);
 
 module.exports = router;
