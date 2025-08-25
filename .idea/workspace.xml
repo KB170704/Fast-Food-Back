@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4b689a0a-9348-4cae-92ca-bd29dad1ff18" name="Changes" comment="JBS ALL DONE" />
+    <list default="true" id="4b689a0a-9348-4cae-92ca-bd29dad1ff18" name="Changes" comment="JBS ALL DONE">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/Models/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Routes/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/Routes/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/addUser.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/addUser.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/editUser.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/editUser.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/users.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/users.ejs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,12 +35,12 @@
     &quot;assignee&quot;: &quot;KB170704&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/KB170704/Grocery-shop-Back.git&quot;,
-    &quot;accountId&quot;: &quot;6ced8aee-dbdf-42e1-95c1-42a9e8c05f6d&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/KB170704/Grocery-shop-Back.git",
+    "accountId": "2695f8be-5e98-48c0-9719-95021095353c"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 0
@@ -69,7 +77,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-WS-251.26927.40" />
+        <option value="bundled-js-predefined-d6986cc7102b-e03c56caf84a-JavaScript-WS-252.23892.411" />
       </set>
     </attachedChunks>
   </component>
@@ -92,6 +100,7 @@
       <workItem from="1756116587359" duration="2767000" />
       <workItem from="1756119870312" duration="330000" />
       <workItem from="1756120852317" duration="1712000" />
+      <workItem from="1756125137937" duration="1514000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <option name="closed" value="true" />

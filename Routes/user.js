@@ -1,15 +1,14 @@
 const express = require("express");
 const {
-  registerUser,
-  loginUser,
-  showAllUsers,
-  showAddUserForm,
-  showEditUserForm,
-  addUser,
-  updateUser,
-  deleteUser,
+    registerUser,
+    loginUser,
+    showAllUsers,
+    showAddUserForm,
+    showEditUserForm,
+    addUser,
+    updateUser,
+    deleteUser,
 } = require("../Controllers/user");
-
 
 const { authenticateJWT, authorizeRoles } = require("../middleware/auth");
 
@@ -19,11 +18,11 @@ const router = express.Router();
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 
-// ✅ Protected routes (need token)
+// ✅ Protected routes
 router.use(authenticateJWT);
 router.use(authorizeRoles("admin"));
 
-// Protected user management routes
+// Admin user management
 router.get("/all", showAllUsers);
 router.get("/add", showAddUserForm);
 router.post("/add", addUser);
