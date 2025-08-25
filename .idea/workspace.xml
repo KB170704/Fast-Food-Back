@@ -4,12 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4b689a0a-9348-4cae-92ca-bd29dad1ff18" name="Changes" comment="JBS DONE">
+    <list default="true" id="4b689a0a-9348-4cae-92ca-bd29dad1ff18" name="Changes" comment="Home Additional details">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/menu.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/Models/menu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Routes/menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/Routes/menu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uploads/1755786500240.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/addUser.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/addUser.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/create.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/create.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/edit.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/edit.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/login.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/login.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/menu.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/menu.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -34,12 +39,12 @@
     &quot;assignee&quot;: &quot;KB170704&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/KB170704/Grocery-shop-Back.git",
-    "accountId": "2695f8be-5e98-48c0-9719-95021095353c"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/KB170704/Grocery-shop-Back.git&quot;,
+    &quot;accountId&quot;: &quot;2695f8be-5e98-48c0-9719-95021095353c&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 0
@@ -49,24 +54,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "junie.onboarding.icon.badge.shown": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "to.speed.mode.migration.done": "true",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2025.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm 2025.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Kaushik\FOOD\kaushik-B\Controllers" />
@@ -90,7 +95,11 @@
       <workItem from="1755794079678" duration="2551000" />
       <workItem from="1755796950653" duration="4006000" />
       <workItem from="1755801899358" duration="7000" />
-      <workItem from="1755954183103" duration="8930000" />
+      <workItem from="1755954183103" duration="9304000" />
+      <workItem from="1756009692998" duration="946000" />
+      <workItem from="1756012493393" duration="14340000" />
+      <workItem from="1756056182782" duration="3114000" />
+      <workItem from="1756099740825" duration="5098000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <option name="closed" value="true" />
@@ -244,7 +253,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755864573140</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Home Additional details">
+      <option name="closed" value="true" />
+      <created>1755970914957</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1755970914957</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -261,6 +278,7 @@
     <MESSAGE value="link Render" />
     <MESSAGE value="JBS" />
     <MESSAGE value="JBS DONE" />
-    <option name="LAST_COMMIT_MESSAGE" value="JBS DONE" />
+    <MESSAGE value="Home Additional details" />
+    <option name="LAST_COMMIT_MESSAGE" value="Home Additional details" />
   </component>
 </project>

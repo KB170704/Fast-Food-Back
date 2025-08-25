@@ -61,7 +61,7 @@ app.get('/menu', authenticateJWT, authorizeRoles('admin'), async (req, res) => {
     }
 });
 
-app.get("/home", async (req, res) => {
+app.get("/home",authenticateJWT, authorizeRoles('admin'), async (req, res) => {
     try {
         const contacts = await Contact.find();
         const menuItems = await Menu.find();

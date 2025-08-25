@@ -1,215 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Edit Menu Item</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 2rem; background-color: #f9f9f9; }
-        .top-bar { text-align: center; margin-bottom: 2rem; }
-        .top-bar a { text-decoration: none; padding: 10px 20px; background-color: #007bff; color: white; border-radius: 8px; margin: 0 10px; display: inline-block; }
-        .top-bar a:hover { background-color: #0056b3; }
-
-        form { max-width: 800px; margin: auto; background-color: #fff; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        label { display: block; margin: 0.5rem 0 0.25rem; font-weight: bold; }
-        input, textarea, select { width: 100%; padding: 10px; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 5px; font-size: 1rem; }
-        .flex-row { display: flex; gap: 10px; align-items: flex-end; margin-bottom: 1rem; }
-        .flex-row > div { flex: 1; }
-        img.preview { max-width: 150px; margin: 5px; border-radius: 8px; }
-        .form-buttons { display: flex; justify-content: space-between; margin-top: 1rem; }
-        .btn { padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; color: white; text-align: center; text-decoration: none; }
-        .btn-submit { background-color: #28a745; }
-        .btn-submit:hover { background-color: #218838; }
-        .btn-back { background-color: #007bff; }
-        .btn-back:hover { background-color: #0056b3; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9fafb;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+            color: #222;
+            margin-bottom: 20px;
+        }
+        form {
+            background: #fff;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #444;
+        }
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.2s ease;
+        }
+        input:focus, textarea:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        textarea {
+            resize: vertical;
+        }
+        .photo-container,
+        #photo-list div {
+            display: inline-block;
+            margin: 10px;
+            text-align: center;
+            vertical-align: top;
+        }
+        .photo-container img,
+        #photo-list img {
+            width: 150px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+        button,
+        input[type="submit"] {
+            margin-top: 15px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        button:hover,
+        input[type="submit"]:hover {
+            background: #0056b3;
+        }
+        button[type="button"] {
+            background: #dc3545;
+        }
+        button[type="button"]:hover {
+            background: #b52d3a;
+        }
+        .detail-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .detail-row input {
+            flex: 1;
+        }
+        .detail-row button {
+            padding: 6px 10px;
+        }
+        .section {
+            margin-top: 25px;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+        .note {
+            font-size: 13px;
+            color: #666;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
-
-<div class="top-bar">
-    <a href="/home">🏠 Home</a>
-</div>
-
-<h2 style="text-align:center;">Edit Menu Item</h2>
+<h2>Edit Menu Item</h2>
 
 <form action="/menu/<%= menuItem._id %>" method="POST" enctype="multipart/form-data">
 
-    <!-- Name & Category -->
-    <div class="flex-row">
-        <div>
-            <label for="Name">Name:</label>
-            <input type="text" name="Name" id="Name" value="<%= menuItem.Name %>" required>
-        </div>
-        <div>
-            <label for="category">Category:</label>
-            <input type="text" name="category" id="category" value="<%= menuItem.category %>" required>
-        </div>
-    </div>
+    <label>Name</label>
+    <input type="text" name="Name" value="<%= menuItem.Name %>" required/>
 
-    <!-- Price, Discount, Grand Total -->
-    <div class="flex-row">
-        <div>
-            <label for="price">Price:</label>
-            <input type="number" name="price" id="price" step="0.01" value="<%= menuItem.price %>" required>
-        </div>
-        <div>
-            <label for="discount">Discount (%):</label>
-            <input type="number" name="discount" id="discount" step="0.01" value="<%= menuItem.discount || 0 %>">
-        </div>
-        <div>
-            <label>Grand Total:</label>
-            <p style="margin:0; font-weight:bold;">₹<span id="finalPrice">0.00</span></p>
-        </div>
-    </div>
+    <label>Description</label>
+    <textarea name="Description" rows="3" required><%= menuItem.Description %></textarea>
 
-    <!-- Unit Number + Unit -->
-    <div class="flex-row">
-        <div>
-            <label for="unitNumber">Unit Quantity:</label>
-            <select name="unitNumber" id="unitNumber">
-                <% [1,2,5,10,15,20,30,40,50,60].forEach(num => { %>
-                    <option value="<%= num %>" <%= menuItem.unitNumber === num ? 'selected' : (num===1 ? 'selected' : '') %>><%= num %></option>
-                <% }) %>
-            </select>
-        </div>
-        <div>
-            <label for="unit">Unit:</label>
-            <select name="unit" id="unit">
-                <option value="g" <%= menuItem.unit === 'g' ? 'selected' : '' %>>g</option>
-                <option value="kg" <%= menuItem.unit === 'kg' ? 'selected' : '' %>>kg</option>
-                <option value="ml" <%= menuItem.unit === 'ml' ? 'selected' : '' %>>ml</option>
-                <option value="ltr" <%= menuItem.unit === 'ltr' ? 'selected' : '' %>>ltr</option>
-                <option value="pcs" <%= menuItem.unit === 'pcs' ? 'selected' : '' %>>pcs</option>
-            </select>
-        </div>
-    </div>
+    <label>Category</label>
+    <input type="text" name="category" value="<%= menuItem.category %>" required/>
 
-    <!-- Other Details -->
-    <label for="type">Type:</label>
-    <input type="text" name="type" id="type" value="<%= menuItem.type %>">
+    <label>Type</label>
+    <input type="text" name="type" value="<%= menuItem.type %>" required/>
 
-    <label for="fssaiLicense">FSSAI License:</label>
-    <input type="text" name="fssaiLicense" id="fssaiLicense" value="<%= menuItem.fssaiLicense %>">
+    <label>Price</label>
+    <input type="number" name="price" value="<%= menuItem.price %>" step="0.01" required/>
 
-    <label for="shelfLife">Shelf Life:</label>
-    <textarea name="shelfLife" id="shelfLife" rows="2"><%= menuItem.shelfLife %></textarea>
+    <label>Discount (%)</label>
+    <input type="number" name="discount" value="<%= menuItem.discount %>" step="0.01" />
 
-    <label for="returnPolicy">Return Policy:</label>
-    <textarea name="returnPolicy" id="returnPolicy" rows="2"><%= menuItem.returnPolicy %></textarea>
+    <label>Unit Number</label>
+    <input type="number" name="unitNumber" value="<%= menuItem.unitNumber %>" />
 
-    <label for="storageTips">Storage Tips:</label>
-    <textarea name="storageTips" id="storageTips" rows="2"><%= menuItem.storageTips %></textarea>
+    <label>Unit</label>
+    <input type="text" name="unit" value="<%= menuItem.unit %>" />
 
-    <label for="keyFeatures">Key Features:</label>
-    <textarea name="keyFeatures" id="keyFeatures" rows="2"><%= menuItem.keyFeatures %></textarea>
+    <label>FSSAI License</label>
+    <input type="text" name="fssaiLicense" value="<%= menuItem.fssaiLicense %>" required/>
 
-    <label for="manufacturerName">Manufacturer Name:</label>
-    <input type="text" name="manufacturerName" id="manufacturerName" value="<%= menuItem.manufacturerName %>">
+    <label>Shelf Life</label>
+    <input type="text" name="shelfLife" value="<%= menuItem.shelfLife %>" />
 
-    <label for="manufacturerAddress">Manufacturer Address:</label>
-    <textarea name="manufacturerAddress" id="manufacturerAddress" rows="2"><%= menuItem.manufacturerAddress %></textarea>
+    <label>Return Policy</label>
+    <input type="text" name="returnPolicy" value="<%= menuItem.returnPolicy %>" />
 
-    <label for="customerCareDetails">Customer Care Details:</label>
-    <textarea name="customerCareDetails" id="customerCareDetails" rows="2"><%= menuItem.customerCareDetails %></textarea>
+    <label>Storage Tips</label>
+    <input type="text" name="storageTips" value="<%= menuItem.storageTips %>" />
 
-    <!-- Delivery Time -->
-    <label for="deliveryTime">Delivery Time (minutes):</label>
-    <input type="number" name="deliveryTime" id="deliveryTime" min="1" max="60" value="<%= menuItem.deliveryTime || 1 %>">
+    <label>Key Features</label>
+    <input type="text" name="keyFeatures" value="<%= menuItem.keyFeatures %>" />
 
-    <!-- Description -->
-    <label for="Description">Description:</label>
-    <textarea name="Description" id="Description" rows="3"><%= menuItem.Description %></textarea>
+    <label>Manufacturer Name</label>
+    <input type="text" name="manufacturerName" value="<%= menuItem.manufacturerName %>" />
 
-    <!-- Photos -->
-    <label>Current Photos:</label>
-    <div id="currentPhotosContainer">
-        <% if(menuItem.photos && menuItem.photos.length > 0) { %>
-            <% menuItem.photos.forEach((p,i) => { %>
-                <img src="<%= p %>" alt="Photo <%= i+1 %>" class="preview" />
-            <% }) %>
+    <label>Manufacturer Address</label>
+    <input type="text" name="manufacturerAddress" value="<%= menuItem.manufacturerAddress %>" />
+
+    <label>Customer Care Details</label>
+    <input type="text" name="customerCareDetails" value="<%= menuItem.customerCareDetails %>" />
+
+    <label>Delivery Time (minutes)</label>
+    <input type="number" name="deliveryTime" value="<%= menuItem.deliveryTime %>" min="1" max="60" />
+
+
+    <div class="section">
+        <h3>Primary Photo</h3>
+        <% if (menuItem.primaryPhoto) { %>
+            <div class="photo-container" data-url="<%= menuItem.primaryPhoto %>">
+                <img src="<%= menuItem.primaryPhoto %>" alt="Primary Photo">
+                <label><input type="checkbox" name="deletePrimaryPhoto" /> Delete Primary Photo</label>
+            </div>
         <% } else { %>
-        <p>No photos uploaded.</p>
+            <p>No primary photo set.</p>
         <% } %>
+        <label>Replace Primary Photo (Upload new)</label>
+        <input type="file" name="photos" accept="image/*" />
     </div>
 
-    <div id="details-container">
-        <% if(menuItem.details && Object.keys(menuItem.details).length > 0) { %>
-            <% Object.entries(menuItem.details).forEach(([key, value], index) => { %>
-                <div class="flex-row">
-                    <div><input type="text" name="details[<%= index %>][key]" value="<%= key %>" placeholder="Field Name" required></div>
-                    <div><input type="text" name="details[<%= index %>][value]" value="<%= value %>" placeholder="Field Value" required></div>
-                    <button type="button" onclick="this.parentElement.remove()">X</button>
+    <div class="section">
+        <h3>Other Photos</h3>
+        <input type="hidden" name="photosToDelete" id="photosToDelete" value="" />
+        <div id="photo-list">
+            <% if(menuItem.photos && menuItem.photos.length > 0) { %>
+                <% menuItem.photos.forEach(photo => { %>
+                    <% if(photo !== menuItem.primaryPhoto) { %> <!-- Exclude primaryPhoto -->
+                    <div class="photo-container" data-url="<%= photo %>">
+                        <img src="<%= photo %>" alt="Other photo" />
+                        <button type="button" onclick="deletePhoto('<%= photo %>', this)">Delete</button>
+                    </div>
+                    <% } %>
+                <% }) %>
+            <% } else { %>
+                <p>No other photos uploaded.</p>
+            <% } %>
+        </div>
+        <label>Add More Photos</label>
+        <input type="file" name="photos" multiple accept="image/*" />
+    </div>
+    <div class="section">
+        <h3>Custom Details</h3>
+        <div id="customDetailsContainer">
+            <% menuItem.customDetailsArray.forEach(function(detail) { %>
+                <div class="detail-row">
+                    <input type="text" name="customKeys" placeholder="Key" value="<%= detail.key %>" required />
+                    <input type="text" name="customValues" placeholder="Value" value="<%= detail.value %>" required />
+                    <button type="button" onclick="this.parentNode.remove()">Remove</button>
                 </div>
-            <% }) %>
-        <% } %>
+            <% }); %>
+        </div>
+        <button type="button" onclick="addDetailField()">Add Detail</button>
     </div>
 
-    <button type="button" onclick="addDetailField()">Add Detail</button>
-
-    <label for="photos">Change / Add Photos:</label>
-    <input type="file" name="photos" id="photo" accept="image/*" multiple>
-    <div id="newPhotosPreview"></div>
-
-    <div class="form-buttons">
-        <button type="submit" class="btn btn-submit">Update Item</button>
-        <a href="/menu" class="btn btn-back">← Back to Menu</a>
-    </div>
+    <input type="submit" value="Update Item" />
 </form>
 
 <script>
-    let detailIndex = <%= menuItem.details ? Object.keys(menuItem.details).length : 0 %>;
-
-    function addDetailField(key = '', value = '') {
-        const container = document.getElementById('details-container');
-        const div = document.createElement('div');
-        div.classList.add("flex-row");
-
-        div.innerHTML = `
-      <div><input type="text" name="details[${detailIndex}][key]" placeholder="Field Name" value="${key}" required></div>
-      <div><input type="text" name="details[${detailIndex}][value]" placeholder="Field Value" value="${value}" required></div>
-      <button type="button" onclick="this.parentElement.remove()">X</button>
-    `;
-        container.appendChild(div);
-        detailIndex++;
+    const photosToDeleteSet = new Set();
+    function deletePhoto(url, btn) {
+        if (confirm('Are you sure you want to delete this photo?')) {
+            photosToDeleteSet.add(url);
+            document.getElementById('photosToDelete').value = Array.from(photosToDeleteSet).join(',');
+            btn.parentElement.style.display = 'none';
+        }
     }
-</script>
-
-<script>
-    // Price + Discount calculation
-    const priceInput = document.getElementById("price");
-    const discountInput = document.getElementById("discount");
-    const finalPriceEl = document.getElementById("finalPrice");
-
-    function updateFinalPrice() {
-        const price = parseFloat(priceInput.value) || 0;
-        const discount = parseFloat(discountInput.value) || 0;
-        const final = price - (price * discount / 100);
-        finalPriceEl.textContent = final.toFixed(2);
-    }
-
-    priceInput.addEventListener("input", updateFinalPrice);
-    discountInput.addEventListener("input", updateFinalPrice);
-    updateFinalPrice();
-
-    // Photo preview for new uploads
-    const photoInput = document.getElementById("photo");
-    const newPhotosPreview = document.getElementById("newPhotosPreview");
-
-    photoInput.addEventListener("change", function() {
-        newPhotosPreview.innerHTML = '';
-        const files = this.files;
-        Array.from(files).forEach(file => {
-            if(file.type.startsWith("image/")) {
-                const reader = new FileReader();
-                reader.onload = e => {
-                    const img = document.createElement("img");
-                    img.src = e.target.result;
-                    img.className = "preview";
-                    newPhotosPreview.appendChild(img);
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    });
 </script>
 
 </body>

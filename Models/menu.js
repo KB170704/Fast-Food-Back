@@ -1,37 +1,35 @@
-// Models/menu.js
-
 const mongoose = require('mongoose');
 
 const menuSchema = mongoose.Schema({
     Name: { type: String, required: true },
     Description: { type: String, required: true },
     price: { type: Number, required: true },
-    discount: { type: Number, default: 0 }, // discount %
+    discount: { type: Number, default: 0 },
     category: { type: String, required: true },
-    type: { type: String }, // veg/non-veg, etc.
-    fssaiLicense: { type: String },
+    type: { type: String, required: true },
+    fssaiLicense: { type: String, required: true },
     shelfLife: { type: String },
     returnPolicy: { type: String },
     storageTips: { type: String },
-    unitNumber: { type: Number, default: 1 }, // e.g., 1 kg, 500 ml
-    unit: { type: String }, // e.g., kg, ml, piece
+    unitNumber: { type: Number, default: 1 },
+    unit: { type: String },
     keyFeatures: { type: String },
     manufacturerName: { type: String },
     manufacturerAddress: { type: String },
     customerCareDetails: { type: String },
-    photos: [{ type: String }], // multiple photos
-    primaryPhoto: { type: String }, // first photo as primary
-    deliveryTime: { type: Number }, // in minutes
-    // ✅ Dynamic fields (any structure allowed)
-    details: {
-        type: Map,
-        of: String,
-        default: {}
-    }
+    primaryPhoto: { type: String },
+    photos: [{ type: String }],  // other photos except primary
+    deliveryTime: { type: Number },
+    customDetails: { type: Object, default: {} },
 }, { timestamps: true });
-// Virtual for calculating price after discount
+
+// Virtual for final price after discount
 menuSchema.virtual('finalPrice').get(function () {
     if (!this.discount) return this.price;
     return this.price - (this.price * this.discount) / 100;
 });
+
+menuSchema.set('toObject', { virtuals: true });
+menuSchema.set('toJSON', { virtuals: true });
+
 module.exports = mongoose.model('Menu', menuSchema);
